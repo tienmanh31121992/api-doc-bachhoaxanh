@@ -2,5 +2,7 @@
     "name": "Tài liệu thiết kế API cho website Bách Hóa Xanh",
     "version": "1.0.0",
     "description": "bachhoaxanh.com",
-    "title": "Bách Hóa Xanh"
+    "title": "Bách Hóa Xanh",
+    "url" : "https://www.bachhoaxanh.com",
+    "sampleUrl" : null
 }
