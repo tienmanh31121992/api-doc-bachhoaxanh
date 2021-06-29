@@ -4,5 +4,13 @@
     "description": "bachhoaxanh.com",
     "title": "Bách Hóa Xanh",
     "url" : "https://www.bachhoaxanh.com",
-    "sampleUrl" : null
+    "sampleUrl" : null,
+    "order": [
+        "Sản_phẩm",
+        "Lấy_danh_sách_nhóm_sp",
+        "Lấy_danh_sách_thương_hiệu",
+        "Lấy_danh_sách_sản_phẩm",
+        "Khách_hàng",
+        "Khách_hàng_đăng_nhập"
+      ]
 }

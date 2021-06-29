@@ -1,7 +1,7 @@
 """
    @api {post} /khach-hang/dang-nhap Đăng nhập
-   @apiName Khách hàng đăng nhập
-   @apiGroup Khách hàng
+   @apiName Khách_hàng_đăng_nhập
+   @apiGroup Khách_hàng
    @apiVersion  1.0.0
    @apiDescription Khách hàng đăng nhập vào hệ thống
 
