@@ -3,14 +3,18 @@
     "version": "1.0.0",
     "description": "bachhoaxanh.com",
     "title": "Bách Hóa Xanh",
-    "url" : "https://www.bachhoaxanh.com",
-    "sampleUrl" : null,
+    "url": "https://www.bachhoaxanh.com/api/v1",
+    "sampleUrl": null,
     "order": [
+        "Tài_khoản",
+        "Đăng_ký",
+        "Đăng_nhập",
+        "Cập_nhật_thông_tin",
+        "Đổi_mật_khẩu",
         "Sản_phẩm",
-        "Lấy_danh_sách_nhóm_sp",
+        "Lấy_danh_mục_sản_phẩm",
+        "Lấy_danh_sách_nhóm_hàng_hot",
         "Lấy_danh_sách_thương_hiệu",
-        "Lấy_danh_sách_sản_phẩm",
-        "Khách_hàng",
-        "Khách_hàng_đăng_nhập"
-      ]
+        "Lấy_danh_sách_sản_phẩm"
+    ]
 }
