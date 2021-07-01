@@ -6,7 +6,7 @@
     "url": "https://www.bachhoaxanh.com/api/v1",
     "sampleUrl": null,
     "order": [
-        "Tài_khoản",
+        "Khách_hàng",
         "Đăng_ký",
         "Đăng_nhập",
         "Cập_nhật_thông_tin",
