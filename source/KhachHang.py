@@ -1,351 +1,489 @@
 """
-    @api {post} /customers/register Đăng ký
-    @apiName Đăng_ký
-    @apiGroup Khách_hàng
-    @apiVersion 1.0.0
-    @apiDescription Khách hàng đăng ký tài khoản
+@api {post} /customer-register Đăng ký
+@apiName Đăng_ký
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Khách hàng đăng ký tài khoản
 
 
-    @apiHeader {String} Content-Type <mark>application/json</mark>
+@apiHeader {String} Content-Type <mark>application/json</mark>
 
 
-    @apiParam (Body) {String} Object.data.ten_khach_hang Tên khách hàng
-    @apiParam (Body) {Number} Object.data.gioi_tinh Giới tính khách hàng
-    @apiParam (Body) {String} Object.data.so_dien_thoai Số điện thoại
-    @apiParam (Body) {String} Object.data.mat_khau Mật khẩu
-    @apiParam (Body) {String} Object.data.dia_chi Địa chỉ khách hàng
-    @apiParam (Body) {Date}   Object.data.ngay_sinh Ngày sinh
-    @apiParam (Body) {String} Object.data.email Địa chỉ thư điện tử
-    @apiParam (Body) {String} Object.data.ten_nguoi_giam_ho Tên người giám hộ
-    @apiParam (Body) {String} Object.data.so_cmnd Số chứng minh thư, căn cước, hộ chiếu
-    @apiParam (Body) {Date}   Object.data.ngay_cap_cmnd Ngày cấp CMT, CCCD, HC
-    @apiParam (Body) {String} Object.data.noi_cap_cmnd Nơi cấp CMT, CCCD, HC
-    @apiParam (Body) {Number} Object.data.tinh_tp_id ID tỉnh/thành phố
-    @apiParam (Body) {Number} Object.data.quan_huyen_id ID quận/huyện
-    @apiParam (Body) {Number} Object.data.xa_phuong_id ID xã/phường
+@apiParam (Body) {String} customer_name Tên khách hàng
+@apiParam (Body) {Number} gender Giới tính khách hàng
+<ul>
+    <li><code>0:</code> Nữ</li>
+    <li><code>1:</code> Nam</li>
+</ul>
+@apiParam (Body) {String} phone Số điện thoại
+@apiParam (Body) {String} password Mật khẩu
+@apiParam (Body) {String} address Địa chỉ khách hàng
+@apiParam (Body) {Date}   [date_birth] Ngày sinh
+@apiParam (Body) {String} [email] Địa chỉ thư điện tử
+@apiParam (Body) {String} [avatar_link] Đường dẫn lưu ảnh đại diện
+@apiParam (Body) {String} [guardian_name] Tên người giám hộ
+@apiParam (Body) {String} [indentity_id] Số chứng minh thư, căn cước, hộ chiếu
+@apiParam (Body) {Date}   [certify_date] Ngày cấp CMT, CCCD, HC
+@apiParam (Body) {String} [certify_place] Nơi cấp CMT, CCCD, HC
+@apiParam (Body) {Number} province_id ID tỉnh/thành phố
+@apiParam (Body) {Number} district_id ID quận/huyện
+@apiParam (Body) {Number} block_id ID xã/phường
 
-    @apiParamExample {JSON} JSON - Body request:
-    {
-        "ten_khach_hang": "Tiến Mạnh",
-        "so_dien_thoai": "0123456789",
-        "mat_khau": "a1b2c3A@",
-        "dia_chi": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-        "ngay_sinh": "31/12/1992",
-        "email": "asdasdasf@gmail.com",
-        "gioi_tinh": 1,
-        "ten_nguoi_giam_ho": null,
-        "so_cmnd": "HC000001VN",
-        "ngay_cap_cmnd": "12/12/2009",
-        "noi_cap_cmnd": "Hải Dương",
-        "tinh_tp_id": 1,
-        "quan_huyen_id": 2,
-        "xa_phuong_id": 3
-    }
-
-
-    @apiSuccess {String} code Mã trạng thái HTTP
-    <br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark><br>
-    @apiSuccess {String} message Thông báo kết quả
-
-    @apiSuccessExample {JSON} Success 200:
-    {
-        "code": 200,
-        "message": "Đăng ký tài khoản thành công!"
-    }
+@apiParamExample {JSON} Body request:
+{
+    "customer_name": "Tiến Mạnh",
+    "gender": 1,
+    "phone": "0123456789",
+    "password": "a1b2c3A@",
+    "address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
+    "date_birth": "31/12/1992",
+    "email": "asdasdasf@gmail.com",
+    "avatar_link": "avatar.jpg",
+    "guardian_name": null,
+    "indentity_id": "HC000001VN",
+    "certify_date": "12/12/2009",
+    "certify_place": "Hải Dương",
+    "province_id": 1,
+    "district_id": 2,
+    "block_id": 3
+}
 
 
-    @apiError 412-PreconditionFailed Lỗi kiểm tra điều kiện
-    <ul>
-        <li><code>code:</code> 412</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
-    <ul>
-        <li><code>code:</code> 500</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
+@apiSuccess {String} code Mã trạng thái HTTP
+<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} message Thông báo kết quả
 
-    @apiErrorExample {JSON} Error 412:
-    {
-        "code": 412,
-        "message": "Tài khoản đã tồn tại!"
-    }
-    @apiErrorExample {JSON} Error 500:
-    {
-        "code": 500,
-        "message": "Thông báo lỗi cụ thể"
-    }
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Đăng ký tài khoản thành công!"
+}
+
+
+@apiError 412-PreconditionFailed Lỗi kiểm tra điều kiện
+<ul>
+    <li><code>code:</code> 412</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 412:
+{
+    "code": 412,
+    "message": "Tài khoản đã tồn tại!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi đăng ký: Mô tả lỗi."
+}
 """
 
 """
-    @api {get} /customers/login Đăng nhập
-    @apiName Đăng_nhập
-    @apiGroup Khách_hàng
-    @apiVersion  1.0.0
-    @apiDescription Khách hàng đăng nhập vào hệ thống
+@api {post} /customer-login Đăng nhập
+@apiName Đăng_nhập
+@apiGroup Khách_hàng
+@apiVersion  1.0.0
+@apiDescription Khách hàng đăng nhập vào hệ thống
 
 
-    @apiHeader {String} Content-Type <mark>application/json</mark>
+@apiHeader {String} Content-Type <mark>application/json</mark>
 
 
-    @apiParam (Body) {String} so_dien_thoai Số điện thoại khách hàng
-    @apiParam (Body) {String} mat_khau Mật khẩu đăng nhập
+@apiParam (Body) {String} phone Số điện thoại khách hàng
+@apiParam (Body) {String} password Mật khẩu đăng nhập
 
-    @apiParamExample {JSON} JSON - Body request:
-    {
-        "so_dien_thoai": "0123456789",
-        "mat_khau": "a1b2c3A@"
-    }
-
-    
-    @apiSuccess {Object} data Thông tin của khách hàng
-    @apiSuccess {Number} data.id ID khách hàng
-    @apiSuccess {String} data.ma_khach_hang Mã khách hàng
-    @apiSuccess {String} data.ten_khach_hang Tên khách hàng
-    @apiSuccess {String} data.so_dien_thoai Số điện thoại
-    @apiSuccess {String} data.dia_chi Địa chỉ khách hàng
-    @apiSuccess {Date}   data.ngay_sinh Ngày sinh
-    @apiSuccess {String} data.link_anh_dai_dien Đường dẫn lưu ảnh đại diện
-    @apiSuccess {String} data.email Địa chỉ thư điện tử
-    @apiSuccess {Number} data.gioi_tinh Giới tính khách hàng
-    @apiSuccess {String} data.ten_nguoi_giam_ho Tên người giám hộ
-    @apiSuccess {String} data.so_cmnd Số chứng minh thư, căn cước, hộ chiếu
-    @apiSuccess {Date}   data.ngay_cap_cmnd Ngày cấp CMT, CCCD, HC
-    @apiSuccess {String} data.noi_cap_cmnd Nơi cấp CMT, CCCD, HC
-    @apiSuccess {Number} data.tinh_tp_id ID tỉnh/thành phố
-    @apiSuccess {Number} data.quan_huyen_id ID quận/huyện
-    @apiSuccess {Number} data.xa_phuong_id ID xã/phường
-    @apiSuccess {String} mesage Thông báo kết quả
-    @apiSuccess {String} token Chuỗi Token
-    @apiSuccess {String} code Mã trạng thái HTTP
-    <br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark><br>
-    
-    @apiSuccessExample {JSON} Success 200:
-    {
-        "code": 200,
-        "message": "Đăng nhập thành công!",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
-        "data": {
-            "id": 1,
-            "ma_khach_hang": "A0000001",
-            "ten_khach_hang": "Tiến Mạnh",
-            "so_dien_thoai": "0123456789",
-            "dia_chi": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-            "ngay_sinh": "31/12/1992",
-            "link_anh_dai_dien": "avatar.jpg",
-            "email": "asdasdasf@gmail.com",
-            "gioi_tinh": 1,
-            "ten_nguoi_giam_ho": null,
-            "so_cmnd": "HC000001VN",
-            "ngay_cap_cmnd": "12/12/2009",
-            "noi_cap_cmnd": "Hải Dương",
-            "tinh_tp_id": 1,
-            "quan_huyen_id": 2,
-            "xa_phuong_id": 3
-        }
-    }
-
-   
-    @apiError (Error 4xx) 403-Forbidden Truy cập dữ liệu bị từ chối
-    <ul>
-        <li><code>code:</code> 403</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-    @apiError (Error 4xx) 404-NotFound Lỗi truy cập dữ liệu không tồn tại
-    <ul>
-        <li><code>code:</code> 404</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-    @apiError (Error 4xx) 412-PreconditionFailed Lỗi khi kiểm tra dữ liệu
-    <ul>
-        <li><code>code:</code> 412</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
-    <ul>
-        <li><code>code:</code> 500</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-
-    @apiErrorExample {JSON} Error 403:
-    {
-        "code": 403,
-        "message": "Tài khoản đang bị khóa!"
-    }
-    @apiErrorExample {JSON} Error 404:
-    {
-        "code": 404,
-        "message": "Tài khoản không tồn tại!"
-    }
-    @apiErrorExample {JSON} Error 412:
-    {
-        "code": 412,
-        "message": "Mật khẩu không đúng!"
-    }
-    @apiErrorExample {JSON} Lỗi hệ thống:
-    {
-        "code": 500,
-        "message": "Xảy ra lỗi khi đăng nhập!"
-    }
-"""
-
-"""
-    @api {put} /customers/update-info Cập nhật thông tin
-    @apiName Cập_nhật_thông_tin
-    @apiGroup Khách_hàng
-    @apiVersion 1.0.0
-    @apiDescription Khách hàng cập nhật thông tin tài khoản
-
-    
-    @apiHeader {String} Content-Type <mark>application/json</mark>
-    @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
+@apiParamExample {JSON} Body request:
+{
+    "phone": "0123456789",
+    "password": "a1b2c3A@"
+}
 
 
-    @apiParam (Body) {Number} id ID khách hàng
-    @apiParam (Body) {String} ten_khach_hang Tên khách hàng
-    @apiParam (Body) {String} so_dien_thoai Số điện thoại
-    @apiParam (Body) {String} dia_chi Địa chỉ khách hàng
-    @apiParam (Body) {Date}   ngay_sinh Ngày sinh
-    @apiParam (Body) {String} link_anh_dai_dien Đường dẫn lưu ảnh đại diện
-    @apiParam (Body) {String} email Địa chỉ thư điện tử
-    @apiParam (Body) {Number} gioi_tinh Giới tính khách hàng
-    @apiParam (Body) {String} ten_nguoi_giam_ho Tên người giám hộ
-    @apiParam (Body) {String} so_cmnd Số chứng minh thư, căn cước, hộ chiếu
-    @apiParam (Body) {Date}   ngay_cap_cmnd Ngày cấp CMT, CCCD, HC
-    @apiParam (Body) {String} noi_cap_cmnd Nơi cấp CMT, CCCD, HC
-    @apiParam (Body) {Number} tinh_tp_id ID tỉnh/thành phố
-    @apiParam (Body) {Number} quan_huyen_id ID quận/huyện
-    @apiParam (Body) {Number} xa_phuong_id ID xã/phường
+@apiSuccess {Object} data Thông tin của khách hàng
+@apiSuccess {Number} data.id ID khách hàng
+@apiSuccess {String} data.customer_code Mã khách hàng
+@apiSuccess {String} data.customer_name Tên khách hàng
+@apiSuccess {Number} data.gender Giới tính khách hàng
+<ul>
+    <li><code>0:</code> Nữ</li>
+    <li><code>1:</code> Nam</li>
+</ul>
+@apiSuccess {String} data.customer_phone Số điện thoại
+@apiSuccess {String} data.customer_address Địa chỉ khách hàng
+@apiSuccess {Date}   data.date_birth Ngày sinh
+@apiSuccess {String} data.avatar_link Đường dẫn lưu ảnh đại diện
+@apiSuccess {String} data.email Địa chỉ thư điện tử
+@apiSuccess {String} data.guardian_name Tên người giám hộ
+@apiSuccess {String} data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
+@apiSuccess {Date}   data.certify_date Ngày cấp CMT, CCCD, HC
+@apiSuccess {String} data.certify_place Nơi cấp CMT, CCCD, HC
+@apiSuccess {Number} data.province_id ID tỉnh/thành phố
+@apiSuccess {Number} data.district_id ID quận/huyện
+@apiSuccess {Number} data.block_id ID xã/phường
+@apiSuccess {String} mesage Thông báo kết quả
+@apiSuccess {String} token Chuỗi Token
+@apiSuccess {String} code Mã trạng thái HTTP
+<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
 
-    @apiParamExample {JSON} JSON - Body request:
-    {
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Đăng nhập thành công!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+    "data": {
         "id": 1,
-        "ten_khach_hang": "Phạm Tiến Mạnh",
-        "so_dien_thoai": "0123456789",
-        "dia_chi": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-        "ngay_sinh": "31/12/1992",
-        "link_anh_dai_dien": "avatar.jpg",
+        "customer_code": "A0000001",
+        "customer_name": "Tiến Mạnh",
+        "gender": 1,
+        "customer_phone": "0123456789",
+        "customer_address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
+        "date_birth": "31/12/1992",
         "email": "asdasdasf@gmail.com",
-        "gioi_tinh": 1,
-        "ten_nguoi_giam_ho": null,
-        "so_cmnd": "HC000001VN",
-        "ngay_cap_cmnd": "10/10/2010",
-        "noi_cap_cmnd": "Hải Dương",
-        "tinh_tp_id": 4,
-        "quan_huyen_id": 5,
-        "xa_phuong_id": 6
+        "avatar_link": "avatar.jpg",
+        "guardian_name": null,
+        "indentity_id": "HC000001VN",
+        "certify_date": "12/12/2009",
+        "certify_place": "Hải Dương",
+        "province_id": 1,
+        "district_id": 2,
+        "block_id": 3
     }
+}
 
 
-    @apiSuccess {Object} Object Kết quả trả về 
-    @apiSuccess {String} Object.code Mã trạng thái HTTP
-    @apiSuccess {String} Object.message Thông báo kết quả
-    @apiSuccess {Object} Object.data Đối tượng khách hàng
-    @apiSuccess {Number} Object.data.id ID khách hàng
-    @apiSuccess {String} Object.data.ma_khach_hang Mã khách hàng
-    @apiSuccess {String} Object.data.ten_khach_hang Tên khách hàng
-    @apiSuccess {String} Object.data.so_dien_thoai Số điện thoại
-    @apiSuccess {String} Object.data.dia_chi Địa chỉ khách hàng
-    @apiSuccess {Date}   Object.data.ngay_sinh Ngày sinh
-    @apiSuccess {String} Object.data.link_anh_dai_dien Đường dẫn lưu ảnh đại diện
-    @apiSuccess {String} Object.data.email Địa chỉ thư điện tử
-    @apiSuccess {Number} Object.data.gioi_tinh Giới tính khách hàng
-    @apiSuccess {String} Object.data.ten_nguoi_giam_ho Tên người giám hộ
-    @apiSuccess {String} Object.data.so_cmnd Số chứng minh thư, căn cước, hộ chiếu
-    @apiSuccess {Date}   Object.data.ngay_cap_cmnd Ngày cấp CMT, CCCD, HC
-    @apiSuccess {String} Object.data.noi_cap_cmnd Nơi cấp CMT, CCCD, HC
-    @apiSuccess {Number} Object.data.tinh_tp_id ID tỉnh/thành phố
-    @apiSuccess {Number} Object.data.quan_huyen_id ID quận/huyện
-    @apiSuccess {Number} Object.data.xa_phuong_id ID xã/phường
+@apiError 403-Forbidden Truy cập dữ liệu bị từ chối
+<ul>
+    <li><code>code:</code> 403</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 404-NotFound Lỗi truy cập dữ liệu không tồn tại
+<ul>
+    <li><code>code:</code> 404</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 412-PreconditionFailed Lỗi khi kiểm tra dữ liệu
+<ul>
+    <li><code>code:</code> 412</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
 
-    @apiSuccessExample {JSON} Cập nhật thông tin thành công:
-    {
-        "code": 200,
-        "message": "Cập nhật thông tin thành công!",
-        "data": {
-            "id": 1,
-            "ma_khach_hang": "A0000001",
-            "ten_khach_hang": "Phạm Tiến Mạnh",
-            "so_dien_thoai": "0123456789",
-            "dia_chi": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-            "ngay_sinh": "31/12/1992",
-            "link_anh_dai_dien": "avatar.jpg",
-            "email": "asdasdasf@gmail.com",
-            "gioi_tinh": 1,
-            "ten_nguoi_giam_ho": null,
-            "so_cmnd": "HC000001VN",
-            "ngay_cap_cmnd": "10/10/2010",
-            "noi_cap_cmnd": "Hải Dương",
-            "tinh_tp_id": 4,
-            "quan_huyen_id": 5,
-            "xa_phuong_id": 6
-        }
-    }
-
-
-    @apiError (Thất bại 400/500) {Object} Object Kết quả trả về 
-    @apiError (Thất bại 400/500) {String} Object.code Mã trạng thái HTTP
-    @apiError (Thất bại 400/500) {String} Object.message Thông báo kết quả
-
-    @apiErrorExample {JSON} Cập nhật thông tin thất bại:
-    {
-        "code": 400,
-        "message": "Cập nhật thông tin thất bại!"
-    }
-
-    @apiErrorExample {JSON} Lỗi hệ thống:
-    {
-        "code": 500,
-        "message": "Xảy ra lỗi khi cập nhật thông tin!"
-    }
+@apiErrorExample {JSON} Error 403:
+{
+    "code": 403,
+    "message": "Tài khoản đang bị khóa!"
+}
+@apiErrorExample {JSON} Error 404:
+{
+    "code": 404,
+    "message": "Tài khoản không tồn tại!"
+}
+@apiErrorExample {JSON} Error 412:
+{
+    "code": 412,
+    "message": "Mật khẩu không đúng!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi đăng nhập: Mô tả lỗi."
+}
 """
 
 """
-    @api {put} /khach-hang/doi-mat-khau Đổi mật khẩu
-    @apiName Đổi_mật_khẩu
-    @apiGroup Khách_hàng
-    @apiVersion 1.0.0
-    @apiDescription Khách hàng thay đổi mật khẩu
+@api {put} /customer-update-info Cập nhật thông tin
+@apiName Cập_nhật_thông_tin
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Khách hàng cập nhật thông tin tài khoản
 
-    @apiParam {Object} Object Đối tượng khách hàng
-    @apiParam {String} Object.data.id ID khách hàng
-    @apiParam {String} Object.data.so_dien_thoai Số điện thoại
-    @apiParam {String} Object.data.mat_khau_cu Mật khẩu hiện tại
-    @apiParam {String} Object.data.mat_khau_moi Mật khẩu mới
 
-    @apiParamExample  {JSON} Dữ liệu mẫu:
-    {
+@apiHeader {String} Content-Type <mark>application/json</mark>
+@apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
+
+
+@apiParam (Body) {Number} id ID khách hàng
+@apiParam (Body) {String} customer_code Mã khách hàng
+@apiParam (Body) {String} customer_name Tên khách hàng
+@apiParam (Body) {String} customer_phone Số điện thoại
+@apiParam (Body) {String} customer_address Địa chỉ khách hàng
+@apiParam (Body) {Date}   date_birth Ngày sinh
+@apiParam (Body) {String} avatar_link Đường dẫn lưu ảnh đại diện
+@apiParam (Body) {String} email Địa chỉ thư điện tử
+@apiParam (Body) {Number} gender Giới tính khách hàng
+<ul>
+    <li><code>0:</code> Nữ</li>
+    <li><code>1:</code> Nam</li>
+</ul>
+@apiParam (Body) {String} guardian_name Tên người giám hộ
+@apiParam (Body) {String} indentity_id Số chứng minh thư, căn cước, hộ chiếu
+@apiParam (Body) {Date}   certify_date Ngày cấp CMT, CCCD, HC
+@apiParam (Body) {String} certify_place Nơi cấp CMT, CCCD, HC
+@apiParam (Body) {Number} province_id ID tỉnh/thành phố
+@apiParam (Body) {Number} district_id ID quận/huyện
+@apiParam (Body) {Number} block_id ID xã/phường
+
+@apiParamExample {JSON} Body request:
+{
+    "id": 1,
+    "customer_code": "A0000001",
+    "customer_name": "Phạm Tiến Mạnh",
+    "customer_phone": "0123456789",
+    "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
+    "date_birth": "31/12/1992",
+    "avatar_link": "avatar.jpg",
+    "email": "asdasdasf@gmail.com",
+    "gender": 1,
+    "guardian_name": null,
+    "indentity_id": "HC000001VN",
+    "certify_date": "10/10/2010",
+    "certify_place": "Hải Dương",
+    "province_id": 4,
+    "district_id": 5,
+    "block_id": 6
+}
+
+
+@apiSuccess {Object} data Thông tin khách hàng
+@apiSuccess {Number} data.id ID khách hàng
+@apiSuccess {String} data.customer_code Mã khách hàng
+@apiSuccess {String} data.customer_name Tên khách hàng
+@apiSuccess {String} data.customer_phone Số điện thoại
+@apiSuccess {String} data.customer_address Địa chỉ khách hàng
+@apiSuccess {Date}   data.date_birth Ngày sinh
+@apiSuccess {String} data.avatar_link Đường dẫn lưu ảnh đại diện
+@apiSuccess {String} data.email Địa chỉ thư điện tử
+@apiSuccess {Number} data.gender Giới tính khách hàng
+<ul>
+    <li><code>0:</code> Nữ</li>
+    <li><code>1:</code> Nam</li>
+</ul>
+@apiSuccess {String} data.guardian_name Tên người giám hộ
+@apiSuccess {String} data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
+@apiSuccess {Date}   data.certify_date Ngày cấp CMT, CCCD, HC
+@apiSuccess {String} data.certify_place Nơi cấp CMT, CCCD, HC
+@apiSuccess {Number} data.province_id ID tỉnh/thành phố
+@apiSuccess {Number} data.district_id ID quận/huyện
+@apiSuccess {Number} data.block_id ID xã/phường
+@apiSuccess {String} message Thông báo kết quả
+@apiSuccess {String} code Mã trạng thái HTTP
+<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Cập nhật thông tin thành công!",
+    "data": {
         "id": 1,
-        "so_dien_thoai": "0123456789",
-        "mat_khau_cu": "a1b2c3A@",
-        "mat_khau_moi": "9m8n7b#"
+        "customer_code": "A0000001",
+        "customer_name": "Phạm Tiến Mạnh",
+        "customer_phone": "0123456789",
+        "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
+        "date_birth": "31/12/1992",
+        "avatar_link": "avatar.jpg",
+        "email": "asdasdasf@gmail.com",
+        "gender": 1,
+        "guardian_name": null,
+        "indentity_id": "HC000001VN",
+        "certify_date": "10/10/2010",
+        "certify_place": "Hải Dương",
+        "province_id": 4,
+        "district_id": 5,
+        "block_id": 6
     }
+}
 
 
-    @apiSuccess {Object} Object Kết quả trả về 
-    @apiSuccess {String} Object.code Mã trạng thái HTTP
-    @apiSuccess {String} Object.message Thông báo kết quả
+@apiError 401-Unauthorized Token hết hạn hoặc không hợp lệ.
+<ul>
+    <li><code>code:</code> 401</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
 
-    @apiSuccessExample {JSON} Đổi mật khẩu thành công:
-    {
-        "code": 200,
-        "message": "Đổi mật khẩu thành công!"
-    }
+@apiErrorExample {JSON} Error 401:
+{
+    "code": 401,
+    "message": "Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi cập nhật thông tin: Mô tả lỗi."
+}
+"""
+
+"""
+@api {put} /customer-change-password Đổi mật khẩu
+@apiName Đổi_mật_khẩu
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Khách hàng thay đổi mật khẩu
 
 
-    @apiError (Thất bại 400/500) {Object} Object Kết quả trả về 
-    @apiError (Thất bại 400/500) {String} Object.code Mã trạng thái HTTP
-    @apiError (Thất bại 400/500) {String} Object.message Thông báo kết quả
+@apiHeader {String} Content-Type <mark>application/json</mark>
+@apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-    @apiErrorExample {JSON} Đổi mật khẩu thất bại:
-    {
-        "code": 400,
-        "message": "Mật khẩu cũ không đúng!"
-    }
 
-    @apiErrorExample {JSON} Lỗi hệ thống:
-    {
-        "code": 500,
-        "message": "Xảy ra lỗi khi đổi mật khẩu!"
-    }
+@apiParam (Body) {String} id ID khách hàng
+@apiParam (Body) {String} customer_code Mã khách hàng
+@apiParam (Body) {String} customer_phone Số điện thoại
+@apiParam (Body) {String} password Mật khẩu hiện tại
+@apiParam (Body) {String} new_password Mật khẩu mới
+
+@apiParamExample  {JSON} Body request:
+{
+    "id": 1,
+    "customer_code": "A0000001",
+    "customer_phone": "0123456789",
+    "password": "a1b2c3A@",
+    "new_password": "9m8n7b#"
+}
+
+
+@apiSuccess {String} code Mã trạng thái HTTP
+<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} message Thông báo kết quả
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Đổi mật khẩu thành công. Vui lòng đăng nhập lại!"
+}
+
+@apiError 401-Unauthorized Token hết hạn hoặc không hợp lệ.
+<ul>
+    <li><code>code:</code> 401</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 412-PreconditionFailed Lỗi kiểm tra điều kiện
+<ul>
+    <li><code>code:</code> 412</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 401:
+{
+    "code": 401,
+    "message": "Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!"
+}
+@apiErrorExample {JSON} Error 412:
+{
+    "code": 412,
+    "message": "Mật khẩu hiện tại không đúng!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi đổi mật khẩu: Mô tả lỗi."
+}
+"""
+
+"""
+@api {get} /customer/<id>/history-search Lịch sử tìm kiếm
+@apiName Lịch_sử_tìm_kiếm
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Lấy danh sách từ khóa khách hàng đã tìm kiếm
+
+
+@apiParam (Path) {Number} id <mark>ID khách hàng</mark>
+@apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
+@apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
+@apiParam {Number} [limit] <mark>Giới hạn bản số lượng bản ghi</mark>
+
+@apiParamExample URL request:
+https://www.bachhoaxanh.com/api/v1/customer/<id>/history-search?sort_by=id&sort_order=asc&limit=4
+
+
+@apiSuccess {String}    code Mã trạng thái HTTP
+<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    message Thông báo kết quả
+@apiSuccess {Object[]}  data Danh sách thông tin chuỗi tìm kiếm
+@apiSuccess {Number}    data.id ID chuỗi tìm kiếm
+@apiSuccess {String}    data.search_string Chuỗi tìm kiếm
+@apiSuccess {String}    data.search_number Số lần tìm kiếm
+@apiSuccess {Date}      data.searched_at Thời điểm tìm kiếm gần nhất
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Lấy thông tin sản phẩm thành công!",
+    "data": [
+        {
+            "id": 1,
+            "search_string": "thit ga",
+            "search_number": 10,
+            "searched_at": "01/06/2021"
+        },
+        {
+            "id": 2,
+            "search_string": "trung",
+            "search_number": 30,
+            "searched_at": "01/06/2021"
+        },
+        {
+            "id": 3,
+            "search_string": "pepsi",
+            "search_number": 15,
+            "searched_at": "01/06/2021"
+        },
+        {
+            "id": 1,
+            "search_string": "banh keo",
+            "search_number": 10,
+            "searched_at": "01/06/2021"
+        }
+    ]
+}
+
+@apiError 400-BadRequest Không thể xử lý yêu cầu.
+<ul>
+    <li><code>code:</code> 400</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 404-NotFound Không tìm thấy dữ liệu.
+<ul>
+    <li><code>code:</code> 404</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 400:
+{
+    "code": 400,
+    "message": "Sai định dạng URL!"
+}
+@apiErrorExample {JSON} Error 404:
+{
+    "code": 404,
+    "message": "Không tìm thấy dữ liệu!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi lấy lịch sử tìm kiếm: Mô tả lỗi."
+}
 """
