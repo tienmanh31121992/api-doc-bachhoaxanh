@@ -26,6 +26,18 @@
         "Quảng_cáo",
         "Lấy_quảng_cáo",
         "Địa_chỉ",
-        "Lấy_danh_sách_khu_vực"
+        "Lấy_danh_sách_khu_vực",
+        "Giỏ_hàng",
+        "Thêm_sản_phẩm",
+        "Xóa_sản_phẩm",
+        "Cập_nhật_số_lượng",
+        "Xem_giỏ_hàng",
+        "Xóa_giỏ_hàng",
+        "Đơn_hàng",
+        "Tạo_đơn_hàng",
+        "Hủy_đơn_hàng",
+        "Mẹo_vặt",
+        "Xem_danh_sách_bài_viết",
+        "Xem_bài_viết"
     ]
 }
