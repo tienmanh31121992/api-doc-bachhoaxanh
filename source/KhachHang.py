@@ -408,7 +408,7 @@
 @apiParam (Path) {Number} id <mark>ID khách hàng</mark>
 @apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
 @apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
-@apiParam {Number} [limit] <mark>Giới hạn bản số lượng bản ghi</mark>
+@apiParam {Number} [limit] <mark>Giới hạn số lượng bản ghi</mark>
 
 @apiParamExample URL request:
 https://www.bachhoaxanh.com/api/v1/customer/<id>/history-search?sort_by=id&sort_order=asc&limit=4

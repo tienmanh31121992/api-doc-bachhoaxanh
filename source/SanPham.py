@@ -159,7 +159,7 @@ https://www.bachhoaxanh.com/api/v1/product-group-menu
 @apiErrorExample {JSON} Error 500:
 {
     "code": 500,
-    "message": "Xảy ra lỗi khi lấy danh sách nhóm sản phẩm: Mô tả lỗi."
+    "message": "Xảy ra lỗi khi lấy danh mục sản phẩm: Mô tả lỗi."
 }
 """
 
@@ -190,7 +190,7 @@ https://www.bachhoaxanh.com/api/v1/product-group-menu
 </ul>
 @apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
 @apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
-@apiParam {Number} [limit] <mark>Giới hạn bản số lượng bản ghi</mark>
+@apiParam {Number} [limit] <mark>Giới hạn số lượng bản ghi</mark>
 @apiParam {Number} [offset] <mark>Số phần tử bỏ qua</mark>
 
 @apiParamExample URL request:
@@ -342,7 +342,7 @@ https://www.bachhoaxanh.com/api/v1/product-group?hot=1&sort_by=id&sort_order=asc
 </ul>
 @apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
 @apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
-@apiParam {Number} [limit] <mark>Giới hạn bản số lượng bản ghi</mark>
+@apiParam {Number} [limit] <mark>Giới hạn số lượng bản ghi</mark>
 @apiParam {Number} [offset] <mark>Số phần tử bỏ qua</mark>
 
 @apiParamExample URL request:
@@ -446,7 +446,7 @@ https://www.bachhoaxanh.com/api/v1/brand?product_group_id=9&sort_by=id&sort_orde
 @apiDescription Lấy danh sách sản phẩm
 
 
-@apiParam {Number} [keywork] <mark>Từ khóa tìm kiếm</mark>
+@apiParam {String} [keywork] <mark>Từ khóa tìm kiếm</mark>
 @apiParam {Number} [product_group_id] <mark>ID nhóm sản phẩm</mark>
 @apiParam {Number} [brand_id] <mark>ID thương hiệu</mark>
 @apiParam {Number} [tag_id] <mark>ID tag</mark>
@@ -467,11 +467,11 @@ https://www.bachhoaxanh.com/api/v1/brand?product_group_id=9&sort_by=id&sort_orde
 </ul>
 @apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
 @apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
-@apiParam {Number} [limit] <mark>Giới hạn bản số lượng bản ghi</mark>
-@apiParam {Number} [offset] <mark>Số phần tử bỏ qua</mark>
+@apiParam {Number} limit <mark>Giới hạn số lượng bản ghi</mark>
+@apiParam {Number} offset <mark>Số phần tử bỏ qua</mark>
 
 @apiParamExample URL request:
-https://www.bachhoaxanh.com/api/v1/product?product_group_id=10&brand_id=9&sort_by=id&sort_order=asc&limit=4&offset=4
+https://www.bachhoaxanh.com/api/v1/product?product_group_id=10&brand_id=9&sort_by=id&sort_order=asc&limit=4&offset=0
 
 
 @apiSuccess {String}    code Mã trạng thái HTTP

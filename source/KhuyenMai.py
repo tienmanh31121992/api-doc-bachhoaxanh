@@ -1,14 +1,19 @@
 """
-@api {get} /promotion/product Lấy số lượng hàng đang khuyến mãi
+@api {get} /promotion Lấy số lượng hàng đang khuyến mãi
 @apiName Số_lượng_khuyến_mãi
 @apiGroup Khuyến_mãi
 @apiVersion 1.0.0
 @apiDescription Lấy số lượng sản phẩm đang được khuyến mãi
 
-@apiParam {Number} [product_group_id] <mark>ID nhóm sản phẩm</mark>
+@apiParam {String} sum_of <mark>Loại đối tượng cần tính số lượng khuyến mãi</mark>
+<ul>
+    <li><code>product:</code> Sản phẩm</li>
+    <li><code>product_group:</code> Nhóm sản phẩm</li>
+    <li><code>brand:</code> Thương hiệu</li>
+</ul>
 
 @apiParamExample {String} URL request:
-https://www.bachhoaxanh.com/api/v1/promotion/product
+https://www.bachhoaxanh.com/api/v1/promotion?sum_of=product
 
 
 @apiSuccess {String}    code Mã trạng thái HTTP
