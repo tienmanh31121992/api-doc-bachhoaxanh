@@ -521,13 +521,13 @@ https://www.bachhoaxanh.com/api/v1/customer/<id>/voucher?sort_by=id&sort_order=a
         {
             "id": 1,
             "voucher_code": "PHM1000K",
-            "voucher_name": Phiếu mua hàng 1 triệu,
+            "voucher_name": "Phiếu mua hàng 1 triệu",
             "content": "Phiếu mua hàng trị  giá 1.000.000đ"
         },
         {
             "id": 2,
             "voucher_code": "PHM2000K",
-            "voucher_name": Phiếu mua hàng 2 triệu,
+            "voucher_name": "Phiếu mua hàng 2 triệu",
             "content": "Phiếu mua hàng trị  giá 2.000.000đ"
         }
     ]
