@@ -38,6 +38,9 @@
         "Hủy_đơn_hàng",
         "Mẹo_vặt",
         "Xem_danh_sách_bài_viết",
-        "Xem_bài_viết"
+        "Xem_bài_viết",
+        "Đăng_bài_viết",
+        "Sửa_bài_viết",
+        "Xóa_bài_viết"
     ]
 }

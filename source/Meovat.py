@@ -1,20 +1,9 @@
 """
-   @api {get} /articles Xem danh sách bài viết, mẹo vặt
+   @api {get} /articles Xem danh sách mẹo vặt (bài viết)
    @apiName Xem_danh_sách_bài_viết
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
-   @apiDescription Hiển thị danh sách các bài viết và mẹo vặt
-
-   @apiParam  {Number} Object.article_group_id giới hạn số lượng items mà trang được phép load
-   @apiParam  {Number} Object.limit giới hạn số lượng items mà trang được phép load
-   @apiParam  {Number} Object.offset vị trí bắt đầu load trang
-   @apiParam  {Object} Object.article Đối tượng bài viết
-   @apiParam  {String} Object.article.created_at ngày tạo bài viết
-
-   @apiParamExample  {JSON} Cách truyền parameter (giới hạn load 10 item):
-   https://www.bachhoaxanh.com/api/v1/articles?article_group_id=1&sort_by=created_at&limit=10
-   @apiParamExample  {JSON} Parameter khi load 10 item tiếp theo:
-   https://www.bachhoaxanh.com/api/v1/articles?article_group_id=1&sort_by=created_at&limit=10&offset=10
+   @apiDescription Hiển thị danh sách các mẹo vặt (bài viết)
 
    @apiSuccess {Object} Object Kết quả trả về
    @apiSuccess {String} Object.code Mã trạng thái HTTP
@@ -194,6 +183,176 @@
     @apiErrorExample {JSON} Error 500:
     {
         "code": 500,
-        "message": "Lỗi load bài viết!"
+        "message": "Lỗi không hiển thị được dữ liệu bài viết!"
     }
+"""
+"""
+   @api {post} /articles/send-article Đăng bài viết
+   @apiName Đăng_bài_viết
+   @apiGroup Mẹo_vặt
+   @apiVersion  1.0.0
+   @apiDescription Khách hàng đăng bài viết
+
+   @apiParam (Body) {Number} Object.customer_id id khách hàng
+   @apiParam (Body) {Number} Object.title tiêu đề bài viết
+   @apiParam (Body) {Number} Object.content nội dung bài viết
+   @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
+   @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
+        
+   @apiParamExample  {JSON} Success 200:
+   {            
+         "customer_id": 1,
+         "title": "Chia sẻ cách bảo quản thịt trong tủ lạnh",
+         "content": "Để bảo quản thịt trong tủ lạnh bạn cần phải...",
+         "article_image": [
+                {
+                   "image_link": "image1.png"
+                },
+                {
+                   "image_link": "image2.png"
+                },
+                {
+                   "image_link": "image3.png"
+                }
+         ]
+   }
+   
+   @apiSuccess {Object} Object Kết quả trả về
+   @apiSuccess {String} Object.code Mã trạng thái HTTP
+   @apiSuccess {String} Object.message Thông báo kết quả
+   
+   @apiSuccessExample {JSON} Success 200:
+   {
+       "code": 200,
+       "message": "Gửi bài viết thành công!",
+   }    
+
+   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
+    <ul>
+        <li><code>code:</code> 400</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>    
+    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
+    <ul>
+        <li><code>code:</code> 500</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+
+    @apiErrorExample {JSON} Error 400:
+    {
+        "code": 400,
+        "message": "Yêu cầu không hợp lệ!"
+    }    
+    @apiErrorExample {JSON} Error 500:
+    {
+        "code": 500,
+        "message": "Không thể gửi bài viết!"
+    }  
+"""
+"""
+   @api {post} /articles/update-article Sửa bài viết
+   @apiName Sửa_bài_viết
+   @apiGroup Mẹo_vặt
+   @apiVersion  1.0.0
+   @apiDescription Khách hàng đăng bài viết
+
+   @apiParam (Body) {Number} Object.article_id id bài viết
+   @apiParam (Body) {Number} Object.title tiêu đề bài viết
+   @apiParam (Body) {Number} Object.content nội dung bài viết
+   @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
+   @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
+
+   @apiParamExample  {JSON} Success 200:
+   {            
+         "aritcle_id": 1,
+         "title": "Chia sẻ cách bảo quản cá trong tủ lạnh",
+         "content": "Để bảo quản cá trong tủ lạnh bạn cần phải...",
+         "article_image": [
+                {
+                   "image_link": "image1.png"
+                },
+                {
+                   "image_link": "image2.png"
+                },
+                {
+                   "image_link": "image3.png"
+                }
+         ]
+   }
+
+   @apiSuccess {Object} Object Kết quả trả về
+   @apiSuccess {String} Object.code Mã trạng thái HTTP
+   @apiSuccess {String} Object.message Thông báo kết quả
+
+   @apiSuccessExample {JSON} Success 200:
+   {
+       "code": 200,
+       "message": "Gửi yêu cầu cập nhật bài viết thành công!",
+   }    
+
+   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
+    <ul>
+        <li><code>code:</code> 400</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>    
+    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
+    <ul>
+        <li><code>code:</code> 500</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+
+    @apiErrorExample {JSON} Error 400:
+    {
+        "code": 400,
+        "message": "Yêu cầu không hợp lệ!"
+    }    
+    @apiErrorExample {JSON} Error 500:
+    {
+        "code": 500,
+        "message": "Không thể gửi yêu cầu cập nhật bài viết!"
+    }  
+"""
+"""
+   @api {delete} /articles/delete-article Xóa bài viết
+   @apiName Xóa_bài_viết
+   @apiGroup Mẹo_vặt
+   @apiVersion  1.0.0
+   @apiDescription Khách hàng xóa bài viết
+
+   @apiParam {Number} article_id id bài viết
+
+   @apiParamExample  {JSON} Cách truyền parameter:
+   https://www.bachhoaxanh.com/api/v1/articles/delete-article?article_id=1
+   
+   @apiSuccess {Object} Object Kết quả trả về
+   @apiSuccess {String} Object.code Mã trạng thái HTTP
+   @apiSuccess {String} Object.message Thông báo kết quả
+
+   @apiSuccessExample {JSON} Success 200:
+   {
+       "code": 200,
+       "message": "Xóa bài viết thành công!",
+   }    
+
+   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
+    <ul>
+        <li><code>code:</code> 400</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>    
+    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
+    <ul>
+        <li><code>code:</code> 500</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+
+    @apiErrorExample {JSON} Error 400:
+    {
+        "code": 400,
+        "message": "Yêu cầu không hợp lệ!"
+    }    
+    @apiErrorExample {JSON} Error 500:
+    {
+        "code": 500,
+        "message": "Không thể xóa bài viết!"
+    }  
 """
