@@ -1,1 +1,0 @@
-apidoc -i source/ -o output/

@@ -1,1 +1,1 @@
-apidoc -i source/ -o heroku-api-doc-bachhoaxanh/
+apidoc -i source/ -o output/
