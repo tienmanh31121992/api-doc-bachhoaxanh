@@ -9,10 +9,9 @@
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
    @apiSuccess {Object[]} Object.data Đối tượng trả về
-   @apiSuccess {Number} Object.data.cart_items_count đếm số sản phẩm trong giỏ hàng
    @apiSuccess {Number} Object.data.cart_total_price tổng tiền trong giỏ hàng
    @apiSuccess {Number} Object.data.ship_fee phí giao hàng dự kiến
-   @apiSuccess {Number} Object.data.voucher_count đếm số lượng voucher
+   @apiSuccess {Number} Object.data.voucher_id id voucher
    @apiSuccess {Object} Object.data.product Đối tượng sản phẩm
    @apiSuccess {Number} Object.data.product.product_id Sản phẩm id
    @apiSuccess {String} Object.data.product.product_code mã sản phẩm
@@ -24,20 +23,15 @@
    @apiSuccess {Number} Object.data.product.promotion.promotion_id id khuyến mãi
    @apiSuccess {Number} Object.data.product.promotion.promotion_name tên khuyến mãi
    @apiSuccess {Number} Object.data.product.promotion.content nội dung khuyến mãi
-   @apiSuccess {Object} Object.data.customer_voucher Đối tượng voucher của khách hàng
-   @apiSuccess {Number} Object.data.customer_voucher.id id đếm số lượng
-   @apiSuccess {Number} Object.data.customer_voucher.voucher_id id voucher
-
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
        "message": "Giỏ hàng load thành công!",
        "data": {
-          "cart_items_count": 2,
           "cart_total_price": 640000,
           "ship_fee": 5000,
-          "voucher_count": 5,
+          "voucher_id": 1,
           "product": [
             {
               "product_id": 1,
@@ -63,29 +57,7 @@
                     "content": "Mua 2 thùng 12 gói mì tôm được tặng thêm 1 thùng mì tôm"
               }
             }
-          ],
-            "customer_voucher": [
-              {
-                  "id": 1,
-                  "voucher_id": 1
-              },
-              {
-                  "id": 2,
-                  "voucher_id": 1
-              },
-              {
-                  "id": 3,
-                  "voucher_id": 1
-              },
-              {
-                  "id": 4,
-                  "voucher_id": 1
-              },
-              {
-                  "id": 5,
-                  "voucher_id": 1
-              }
-           ]
+          ]
        }
    }
 

@@ -14,18 +14,18 @@
        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
    }
 
-   @apiParam (Body) {String} Object.data.customer_name tên khách hàng
-   @apiParam (Body) {String} Object.data.customer_phone số điện thoại khách hàng
-   @apiParam (Body) {String} Object.data.receiver_address địa chỉ nhận
+   @apiParam (Body) {Number} Object.data.customer_id id khách hàng
+   @apiParam (Body) {String} Object.data.receiver_name tên người nhận
    @apiParam (Body) {String} Object.data.receiver_phone số điện thoại người nhận
-   @apiParam (Body) {String} Object.data.province_id id tỉnh, thành phố
-   @apiParam (Body) {String} Object.data.district_id id quận, huyện
-   @apiParam (Body) {String} Object.data.block_id id xã, phường
+   @apiParam (Body) {String} Object.data.receiver_address địa chỉ nhận
+   @apiParam (Body) {Number} Object.data.province_id id tỉnh, thành phố
+   @apiParam (Body) {Number} Object.data.district_id id quận, huyện
+   @apiParam (Body) {Number} Object.data.block_id id xã, phường
    @apiParam (Body) {String} Object.data.appointment_date ngày hẹn giao hàng
    @apiParam (Body) {String} Object.data.delivery_note ghi chú vận chuyển
    @apiParam (Body) {String} Object.data.bill_note ghi chú đơn hàng
-   @apiParam (Body) {String} Object.data.ship_fee phí ship
-   @apiParam (Body) {String} Object.data.total_price tổng tiền đơn hàng
+   @apiParam (Body) {Number} Object.data.ship_fee phí ship
+   @apiParam (Body) {Number} Object.data.total_price tổng tiền đơn hàng
    @apiParam (Body) {Number} Object.data.status Trạng thái đơn hàng
     <ul>
         <li><code>0:</code> đã hủy</li>
@@ -34,19 +34,18 @@
         <li><code>3:</code> đang giao hàng</li>
         <li><code>4:</code> đã nhận hàng</li>
     </ul>
+   @apiParam (Body) {Number} Object.data.voucher_id id phiếu mua hàng
    @apiParam (Body) {Object} Object.data.product Đối tượng sản phẩm trong đơn hàng
-   @apiParam (Body) {String} Object.data.product.product_name tên sản phẩm
-   @apiParam (Body) {String} Object.data.product.quantity mua với số lượng
-   @apiParam (Body) {String} Object.data.product.expired_at ngày hết hạn
-   @apiParam (Body) {String} Object.data.product.price giá sản phẩm
-   @apiParam (Body) {String} Object.data.product.total_price tổng tiền sản phẩm
+   @apiParam (Body) {String} Object.data.product.product_id id sản phẩm
+   @apiParam (Body) {Number} Object.data.product.quantity mua với số lượng
+   @apiParam (Body) {Number} Object.data.product.price giá sản phẩm
 
    @apiParamExample {JSON} JSON - Body request:
     {
-        "customer_name": "Nguyễn Hoàng Sơn",
-        "customer_phone": "0353395973",
+        "customer_id": 1,
         "receiver_name": "Phạm Tiến Mạnh",
         "receiver_phone": "0973456233",
+        "receiver_address": "Số 8, ngách 141",
         "province_id": 1,
         "district_id": 8,
         "block_id": 6,
@@ -56,20 +55,17 @@
         "ship_fee": 19000,
         "total_price": 288000,
         "status": 1,
+        "voucher_id": 1,
         "product": [
               {
-                  "product_name": "snack Dorito bịch 64g",
+                  "product_id": 1,
                   "quantity": 3,
-                  "expired_at": "30/10/2021",
-                  "price": 32000,
-                  "total_price": 96000
+                  "price": 32000
               },
               {
-                  "product_name": "Hải sản ngũ sắc SG Food gói 300g",
+                  "product_id": 2,
                   "quantity": 4,
-                  "expired_at": "30/4/2021",
-                  "price": 48000,
-                  "total_price": 192000
+                  "price": 40000
               }
         ]
     }
