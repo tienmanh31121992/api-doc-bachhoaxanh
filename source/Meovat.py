@@ -199,7 +199,7 @@
    @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
    @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
         
-   @apiParamExample  {JSON} Success 200:
+   @apiParamExample  {JSON} Body Request:
    {            
          "customer_id": 1,
          "title": "Chia sẻ cách bảo quản thịt trong tủ lạnh",
@@ -262,7 +262,7 @@
    @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
    @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
 
-   @apiParamExample  {JSON} Success 200:
+   @apiParamExample  {JSON} Body Request:
    {            
          "aritcle_id": 1,
          "title": "Chia sẻ cách bảo quản cá trong tủ lạnh",

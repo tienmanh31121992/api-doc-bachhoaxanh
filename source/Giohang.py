@@ -94,6 +94,75 @@
     }
 """
 """
+   @api {post} /cart/add-cart Thêm giỏ hàng
+   @apiName Thêm_giỏ_hàng
+   @apiGroup Giỏ_hàng
+   @apiVersion  1.0.0
+   @apiDescription Khách hàng thêm sản phẩm, giỏ hàng được thêm vào DB
+
+   @apiParam  {Number} Object.product_id id Sản phẩm
+   @apiParam  {Number} Object.price giá sản phẩm
+   @apiParam  {Number} Object.quantity số lượng mua   
+   
+   @apiParamExample  {JSON} Body Request:
+   {        
+        "product_id": 1,
+        "price": 196000,
+        "quantity": 1
+   }
+   
+   @apiSuccess {String} Object.code Mã trạng thái HTTP
+   @apiSuccess {String} Object.message Thông báo kết quả
+   
+   @apiSuccessExample {JSON} Success 200:
+   {
+       "code": 200,
+       "message": "Thêm giỏ hàng thành công",
+       "data": {
+           "cart_items_count": 1,
+           "cart_total_price": 196000,
+           "product": [
+              {
+                 "product_name": "Thịt ba chỉ bò Úc Pacow khay",
+                 "thumbnail_link": "product1.png"
+              }
+           ]      
+       }
+   }
+
+   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
+    <ul>
+        <li><code>code:</code> 400</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+   @apiError (Error 4xx) 412-PreconditionFailed Lỗi kiểm tra điều kiện
+    <ul>
+        <li><code>code:</code> 412</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
+    <ul>
+        <li><code>code:</code> 500</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+
+    @apiErrorExample {JSON} Error 400:
+    {
+        "code": 400,
+        "message": "Yêu cầu không hợp lệ!"
+    }
+    @apiErrorExample {JSON} Error 412:
+    {
+        "code": 412,
+        "message": "Hàng đang tạm hết!"
+    }
+    @apiErrorExample {JSON} Error 500:
+    {
+        "code": 500,
+        "message": "Thêm sản phẩm vào giỏ hàng thất bại!"
+    }
+"""
+"""
    @api {post} /cart/add-item Thêm sản phẩm
    @apiName Thêm_sản_phẩm
    @apiGroup Giỏ_hàng
@@ -102,11 +171,11 @@
 
    @apiParam  {Number} cart_id id giỏ hàng
    @apiParam  {Number} product_id id Sản phẩm
-
+   @apiParam  {Number} quantity số lượng mua
+   
    @apiParamExample  {JSON} Cách truyền parameter:
-   https://www.bachhoaxanh.com/api/v1/cart/add-item?cart_id=1&product_id=1
+   https://www.bachhoaxanh.com/api/v1/cart/add-item?cart_id=1&product_id=1&quantity=2
 
-   @apiSuccess {Object} Object Kết quả trả về
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
    @apiSuccess {Object[]} Object.data Đối tượng trả về
@@ -115,20 +184,22 @@
    @apiSuccess {Object} Object.data.product Đối tượng sản phẩm
    @apiSuccess {String} Object.data.product.product_name tên sản phẩm
    @apiSuccess {String} Object.data.product.thumbnail_link ảnh thumbnail sản phẩm
-   @apiSuccess {Number} Object.data.product.cart_product_total_price tổng tiền sản phẩm
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
        "message": "Thêm sản phẩm vào giỏ hàng thành công",
        "data": {
-           "cart_items_count": 1,
-           "cart_total_price": 196000,
+           "cart_items_count": 2,
+           "cart_total_price": 500000,
            "product": [
               {
                  "product_name": "Thịt ba chỉ bò Úc Pacow khay",
-                 "thumbnail_link": "product1.png",
-                 "cart_product_total_price": 196000
+                 "thumbnail_link": "product1.png"
+              },
+              {
+                 "product_name": "Hộp phô mai que 300g",
+                 "thumbnail_link": "product2.png"
               }
            ]      
        }
