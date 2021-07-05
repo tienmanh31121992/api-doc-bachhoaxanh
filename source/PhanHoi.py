@@ -10,8 +10,11 @@
 
 @apiParam (Body) {Number} customer_id ID khách hàng
 @apiParam (Body) {Number} product_id ID sản phẩm
+@apiParam (Body) {Number} article_id ID bài viết
 @apiParam (Body) {Number} admin_id ID quản trị viên
 @apiParam (Body) {Number} parent_id ID bài viết gốc
+@apiParam (Body) {String} name Tên người viết bài
+@apiParam (Body) {String} phone Số điện thoại
 @apiParam (Body) {Number} rating Số sao đánh giá
 @apiParam (Body) {Number} feedback_type Loại bình luận, đánh giá
 <ul>
@@ -25,8 +28,11 @@
 {
     "customer_id": 12,
     "product_id": 22,
+    "article_id": null,
     "admin_id": null,
     "parent_id": 0,
+    "name": "Hòa",
+    "phone": "123123123",
     "rating": 5,
     "feedback_type": 1,
     "content": "Sản phẩm chất lượng",
@@ -68,19 +74,20 @@
 
 
 @apiParam {String} [keywork] <mark>Từ khóa tìm kiếm</mark>
-@apiParam {Number} product_id <mark>ID nhóm sản phẩm</mark>
-@apiParam {Number} feedback_type <mark>ID nhóm sản phẩm</mark>
+@apiParam {Number} [product_id] <mark>ID sản phẩm</mark>
+@apiParam {Number} [article_id] <mark>ID bài viết</mark>
+@apiParam {Number} feedback_type <mark>Loại bình luận, đánh giá</mark>
 <ul>
     <li><code>1:</code> Đánh giá</li>
     <li><code>2:</code> Bình luận</li>
 </ul>
-@apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là created_at</mark>
-@apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định desc</mark>
-@apiParam {Number} limit <mark>Giới hạn số lượng bản ghi</mark>
-@apiParam {Number} offset <mark>Số phần tử bỏ qua</mark>
+@apiParam {String} sort_by=created_at <mark>Sắp xếp theo</mark>
+@apiParam {String} sort_order=desc <mark>Kiểu sắp xếp</mark>
+@apiParam {Number} page=1 <mark>Vị trí trang cần lấy dữ liệu</mark>
+@apiParam {Number} per_page=2 <mark>Số bài viết trên một trang</mark>
 
 @apiParamExample URL request:
-https://www.bachhoaxanh.com/api/v1/product?product_id=10&feedback_type=1&sort_by=created_at&sort_order=desc&limit=2&offset=0
+https://www.bachhoaxanh.com/api/v1/product?product_id=10&feedback_type=1&sort_by=created_at&sort_order=desc&page=1&per_page=2
 
 
 @apiSuccess {String}    Object.code Mã trạng thái HTTP
@@ -94,10 +101,31 @@ https://www.bachhoaxanh.com/api/v1/product?product_id=10&feedback_type=1&sort_by
 @apiSuccess {String}    Object.data.content Nội dung
 @apiSuccess {String[]}  Object.data.media Danh sách đường dẫn lưu phương tiện của bài viết
 @apiSuccess {Number}    Object.data.likes Lượt thích
-@apiSuccess {Object}    Object.data.customer Thông tin khách hàng đã gửi bài viết
-@apiSuccess {Object}    Object.data.admin Thông tin quản trị viên đã gửi bài viết
+@apiSuccess {Number}    Object.data.customer.id Mã khách hàng
+@apiSuccess {String}    Object.data.customer.customer_name Tên khách hàng
+@apiSuccess {Object}    Object.data.customer Thông tin khách hàng
+@apiSuccess {Number}    Object.data.admin.id Mã quản trị viên
+@apiSuccess {String}    Object.data.admin.admin_name Tên quản trị viên
+@apiSuccess {Object}    Object.data.admin Thông tin quản trị viên
 @apiSuccess {Object[]}  Object.data.child Danh sách các bình luận, đánh giá con
-
+@apiSuccess {Number}    Object.data.child.id ID bình luận, đánh giá
+@apiSuccess {Number}    Object.data.child.parent_id ID bài viết gốc
+@apiSuccess {Number}    Object.data.child.feedback_type ID bình luận, đánh giá
+@apiSuccess {Date}      Object.data.child.created_at Ngày gửi bài viết
+@apiSuccess {String}    Object.data.child.content Nội dung
+@apiSuccess {String[]}  Object.data.child.media Danh sách đường dẫn lưu phương tiện của bài viết
+@apiSuccess {Number}    Object.data.child.likes Lượt thích
+@apiSuccess {Object}    Object.data.child.customer Thông tin khách hàng
+@apiSuccess {Number}    Object.data.child.customer.id Mã khách hàng
+@apiSuccess {String}    Object.data.child.customer.customer_name Tên khách hàng
+@apiSuccess {Object}    Object.data.child.admin Thông tin quản trị viên
+@apiSuccess {Number}    Object.data.child.admin.id Mã quản trị viên
+@apiSuccess {String}    Object.data.child.admin.admin_name Tên quản trị viên
+@apiSuccess {Object}    Object.paging Thông tin phân trang
+@apiSuccess {Number}    Object.paging.page Vị trí trang yêu cầu
+@apiSuccess {Number}    Object.paging.per_page Số  bài viết trên một trang
+@apiSuccess {Number}    Object.paging.total_page Tổng số trang
+@apiSuccess {Number}    Object.paging.total_count Tổng số bài viết
 @apiSuccessExample {JSON} Success 200:
 {
     "code": 200,
@@ -141,7 +169,13 @@ https://www.bachhoaxanh.com/api/v1/product?product_id=10&feedback_type=1&sort_by
             "admin_id": null,
             "child": null
         }
-    ]
+    ],
+    "paging":{
+        "page": 1,
+        "per_page": 2,
+        "page_count": 10,
+        "total_count": 20
+    }
 }
 
 
