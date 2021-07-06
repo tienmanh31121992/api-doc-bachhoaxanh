@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "bachhoaxanh.com",
     "title": "Bách Hóa Xanh",
-    "url": "https://www.bachhoaxanh.com/api/v1",
-    "sampleUrl": null,
+    "url": "{host}/api/v1.0",
     "order": [
         "Khách_hàng",
         "Đăng_ký",
