@@ -1,5 +1,5 @@
 """
-@api {get} /sector Lấy danh sách khu vực
+@api {get} /sectors Lấy danh sách khu vực
 @apiName Lấy_danh_sách_khu_vực
 @apiGroup Địa_chỉ
 @apiVersion 1.0.0
@@ -7,30 +7,30 @@
 
 
 @apiParamExample {JSON} URL request:
-https://www.bachhoaxanh.com/api/v1/sector
+{host}/api/v1.0/sectors
 
 
-@apiSuccess {String}    code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
-@apiSuccess {String}    message Thông báo kết quả
-@apiSuccess {Object[]}  data Danh sách thông tin khu vực
-@apiSuccess {Number}    data.id ID khu vực
-@apiSuccess {Number}    data.parent_id ID khu vực cha
-@apiSuccess {String}    data.code Mã nhóm sản phẩm
-@apiSuccess {String}    data.name Tên nhóm sản phẩm
-@apiSuccess {Number}    data.level Cấp khu vực
-@apiSuccess {Object[]}  data.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    data.child.id ID khu vực
-@apiSuccess {Number}    data.child.parent_id ID khu vực cha
-@apiSuccess {String}    data.child.code Mã nhóm sản phẩm
-@apiSuccess {String}    data.child.name Tên nhóm sản phẩm
-@apiSuccess {Number}    data.child.level Cấp khu vực
-@apiSuccess {Object[]}  data.child.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    data.child.child.id ID khu vực
-@apiSuccess {Number}    data.child.child.parent_id ID khu vực cha
-@apiSuccess {String}    data.child.child.code Mã nhóm sản phẩm
-@apiSuccess {String}    data.child.child.name Tên nhóm sản phẩm
-@apiSuccess {Number}    data.child.child.level Cấp khu vực
+@apiSuccess {Number}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin khu vực
+@apiSuccess {Number}    O.data.id ID khu vực
+@apiSuccess {Number}    O.data.parent_id ID khu vực cha
+@apiSuccess {String}    O.data.code Mã khu vực
+@apiSuccess {String}    O.data.name Tên khu vực
+@apiSuccess {Number}    O.data.level Cấp khu vực
+@apiSuccess {Object[]}  O.data.child Danh sách thông tin khu vực con
+@apiSuccess {Number}    O.data.child.id ID khu vực
+@apiSuccess {Number}    O.data.child.parent_id ID khu vực cha
+@apiSuccess {String}    O.data.child.code Mã khu vực
+@apiSuccess {String}    O.data.child.name Tên khu vực
+@apiSuccess {Number}    O.data.child.level Cấp khu vực
+@apiSuccess {Object[]}  O.data.child.child Danh sách thông tin khu vực con
+@apiSuccess {Number}    O.data.child.child.id ID khu vực
+@apiSuccess {Number}    O.data.child.child.parent_id ID khu vực cha
+@apiSuccess {String}    O.data.child.child.code Mã khu vực
+@apiSuccess {String}    O.data.child.child.name Tên khu vực
+@apiSuccess {Number}    O.data.child.child.level Cấp khu vực
 
 @apiSuccessExample {JSON} Success 200:
 {

@@ -1,5 +1,5 @@
 """
-@api {post} /customer-register Đăng ký
+@api {post} /customers/actions/register Đăng ký
 @apiName Đăng_ký
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -8,9 +8,14 @@
 
 @apiHeader {String} Content-Type <mark>application/json</mark>
 
+@apiHeaderExample {JSON} Header request:
+{
+    "Content-Type": "application/json"
+}
+
 
 @apiParam (Body) {String} customer_name Tên khách hàng
-@apiParam (Body) {Number} gender Giới tính khách hàng
+@apiParam (Body) {Number=0,1} gender Giới tính khách hàng
 <ul>
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
@@ -18,7 +23,7 @@
 @apiParam (Body) {String} phone Số điện thoại
 @apiParam (Body) {String} password Mật khẩu
 @apiParam (Body) {String} address Địa chỉ khách hàng
-@apiParam (Body) {Date}   [date_birth] Ngày sinh
+@apiParam (Body) {Date}   [date_of_birth] Ngày sinh
 @apiParam (Body) {String} [email] Địa chỉ thư điện tử
 @apiParam (Body) {String} [avatar_link] Đường dẫn lưu ảnh đại diện
 @apiParam (Body) {String} [guardian_name] Tên người giám hộ
@@ -38,7 +43,7 @@
     "address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
     "date_birth": "31/12/1992",
     "email": "asdasdasf@gmail.com",
-    "avatar_link": "avatar.jpg",
+    "avatar_link": "avatar1.jpg",
     "guardian_name": null,
     "indentity_id": "HC000001VN",
     "certify_date": "12/12/2009",
@@ -49,9 +54,9 @@
 }
 
 
-@apiSuccess {String} code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
-@apiSuccess {String} message Thông báo kết quả
+@apiSuccess {Number} O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.message Thông báo kết quả
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -84,7 +89,7 @@
 """
 
 """
-@api {post} /customer-login Đăng nhập
+@api {post} /customers/actions/login Đăng nhập
 @apiName Đăng_nhập
 @apiGroup Khách_hàng
 @apiVersion  1.0.0
@@ -92,6 +97,11 @@
 
 
 @apiHeader {String} Content-Type <mark>application/json</mark>
+
+@apiHeaderExample {JSON} Header request:
+{
+    "Content-Type": "application/json"
+}
 
 
 @apiParam (Body) {String} phone Số điện thoại khách hàng
@@ -104,31 +114,32 @@
 }
 
 
-@apiSuccess {Object} data Thông tin của khách hàng
-@apiSuccess {Number} data.id ID khách hàng
-@apiSuccess {String} data.customer_code Mã khách hàng
-@apiSuccess {String} data.customer_name Tên khách hàng
-@apiSuccess {Number} data.gender Giới tính khách hàng
+@apiSuccess {Number} O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.mesage Thông báo kết quả
+@apiSuccess {String} O.token Chuỗi Token
+@apiSuccess {Object} O.data Thông tin của khách hàng
+@apiSuccess {Number} O.data.id ID khách hàng
+@apiSuccess {String} O.data.customer_code Mã khách hàng
+@apiSuccess {String} O.data.customer_name Tên khách hàng
+@apiSuccess {Number} O.data.gender Giới tính khách hàng
 <ul>
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
 </ul>
-@apiSuccess {String} data.customer_phone Số điện thoại
-@apiSuccess {String} data.customer_address Địa chỉ khách hàng
-@apiSuccess {Date}   data.date_birth Ngày sinh
-@apiSuccess {String} data.avatar_link Đường dẫn lưu ảnh đại diện
-@apiSuccess {String} data.email Địa chỉ thư điện tử
-@apiSuccess {String} data.guardian_name Tên người giám hộ
-@apiSuccess {String} data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
-@apiSuccess {Date}   data.certify_date Ngày cấp CMT, CCCD, HC
-@apiSuccess {String} data.certify_place Nơi cấp CMT, CCCD, HC
-@apiSuccess {Number} data.province_id ID tỉnh/thành phố
-@apiSuccess {Number} data.district_id ID quận/huyện
-@apiSuccess {Number} data.block_id ID xã/phường
-@apiSuccess {String} mesage Thông báo kết quả
-@apiSuccess {String} token Chuỗi Token
-@apiSuccess {String} code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.data.customer_phone Số điện thoại
+@apiSuccess {String} O.data.customer_address Địa chỉ khách hàng
+@apiSuccess {Date}   O.data.date_birth Ngày sinh
+@apiSuccess {String} O.data.avatar_link Đường dẫn lưu ảnh đại diện
+@apiSuccess {String} O.data.email Địa chỉ thư điện tử
+@apiSuccess {String} O.data.guardian_name Tên người giám hộ
+@apiSuccess {String} O.data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
+@apiSuccess {Date}   O.data.certify_date Ngày cấp CMT, CCCD, HC
+@apiSuccess {String} O.data.certify_place Nơi cấp CMT, CCCD, HC
+@apiSuccess {Number} O.data.province_id ID tỉnh/thành phố
+@apiSuccess {Number} O.data.district_id ID quận/huyện
+@apiSuccess {Number} O.data.block_id ID xã/phường
+
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -144,7 +155,7 @@
         "customer_address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
         "date_birth": "31/12/1992",
         "email": "asdasdasf@gmail.com",
-        "avatar_link": "avatar.jpg",
+        "avatar_link": "avatar1.jpg",
         "guardian_name": null,
         "indentity_id": "HC000001VN",
         "certify_date": "12/12/2009",
@@ -200,7 +211,7 @@
 """
 
 """
-@api {put} /customer-update-info Cập nhật thông tin
+@api {put} /customers/actions/updateinfo Cập nhật thông tin
 @apiName Cập_nhật_thông_tin
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -209,6 +220,12 @@
 
 @apiHeader {String} Content-Type <mark>application/json</mark>
 @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
+
+@apiHeaderExample {JSON} Header request:
+{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
 
 
 @apiParam (Body) {Number} id ID khách hàng
@@ -219,7 +236,7 @@
 @apiParam (Body) {Date}   date_birth Ngày sinh
 @apiParam (Body) {String} avatar_link Đường dẫn lưu ảnh đại diện
 @apiParam (Body) {String} email Địa chỉ thư điện tử
-@apiParam (Body) {Number} gender Giới tính khách hàng
+@apiParam (Body) {Number=0,1} gender Giới tính khách hàng
 <ul>
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
@@ -240,7 +257,7 @@
     "customer_phone": "0123456789",
     "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
     "date_birth": "31/12/1992",
-    "avatar_link": "avatar.jpg",
+    "avatar_link": "avatar1.jpg",
     "email": "asdasdasf@gmail.com",
     "gender": 1,
     "guardian_name": null,
@@ -253,30 +270,30 @@
 }
 
 
-@apiSuccess {Object} data Thông tin khách hàng
-@apiSuccess {Number} data.id ID khách hàng
-@apiSuccess {String} data.customer_code Mã khách hàng
-@apiSuccess {String} data.customer_name Tên khách hàng
-@apiSuccess {String} data.customer_phone Số điện thoại
-@apiSuccess {String} data.customer_address Địa chỉ khách hàng
-@apiSuccess {Date}   data.date_birth Ngày sinh
-@apiSuccess {String} data.avatar_link Đường dẫn lưu ảnh đại diện
-@apiSuccess {String} data.email Địa chỉ thư điện tử
-@apiSuccess {Number} data.gender Giới tính khách hàng
+@apiSuccess {Number} O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.message Thông báo kết quả
+@apiSuccess {Object} O.data Thông tin khách hàng
+@apiSuccess {Number} O.data.id ID khách hàng
+@apiSuccess {String} O.data.customer_code Mã khách hàng
+@apiSuccess {String} O.data.customer_name Tên khách hàng
+@apiSuccess {String} O.data.customer_phone Số điện thoại
+@apiSuccess {String} O.data.customer_address Địa chỉ khách hàng
+@apiSuccess {Date}   O.data.date_birth Ngày sinh
+@apiSuccess {String} O.data.avatar_link Đường dẫn lưu ảnh đại diện
+@apiSuccess {String} O.data.email Địa chỉ thư điện tử
+@apiSuccess {Number} O.data.gender Giới tính khách hàng
 <ul>
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
 </ul>
-@apiSuccess {String} data.guardian_name Tên người giám hộ
-@apiSuccess {String} data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
-@apiSuccess {Date}   data.certify_date Ngày cấp CMT, CCCD, HC
-@apiSuccess {String} data.certify_place Nơi cấp CMT, CCCD, HC
-@apiSuccess {Number} data.province_id ID tỉnh/thành phố
-@apiSuccess {Number} data.district_id ID quận/huyện
-@apiSuccess {Number} data.block_id ID xã/phường
-@apiSuccess {String} message Thông báo kết quả
-@apiSuccess {String} code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.data.guardian_name Tên người giám hộ
+@apiSuccess {String} O.data.indentity_id Số chứng minh thư, căn cước, hộ chiếu
+@apiSuccess {Date}   O.data.certify_date Ngày cấp CMT, CCCD, HC
+@apiSuccess {String} O.data.certify_place Nơi cấp CMT, CCCD, HC
+@apiSuccess {Number} O.data.province_id ID tỉnh/thành phố
+@apiSuccess {Number} O.data.district_id ID quận/huyện
+@apiSuccess {Number} O.data.block_id ID xã/phường
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -289,7 +306,7 @@
         "customer_phone": "0123456789",
         "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
         "date_birth": "31/12/1992",
-        "avatar_link": "avatar.jpg",
+        "avatar_link": "avatar2.jpg",
         "email": "asdasdasf@gmail.com",
         "gender": 1,
         "guardian_name": null,
@@ -327,7 +344,7 @@
 """
 
 """
-@api {put} /customer-change-password Đổi mật khẩu
+@api {patch} /customers/actions/changepassword Đổi mật khẩu
 @apiName Đổi_mật_khẩu
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -337,8 +354,14 @@
 @apiHeader {String} Content-Type <mark>application/json</mark>
 @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
+@apiHeaderExample {JSON} Header request:
+{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
 
-@apiParam (Body) {String} id ID khách hàng
+
+@apiParam (Body) {Number} id ID khách hàng
 @apiParam (Body) {String} customer_code Mã khách hàng
 @apiParam (Body) {String} customer_phone Số điện thoại
 @apiParam (Body) {String} password Mật khẩu hiện tại
@@ -354,9 +377,9 @@
 }
 
 
-@apiSuccess {String} code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
-@apiSuccess {String} message Thông báo kết quả
+@apiSuccess {Number} O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.message Thông báo kết quả
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -397,60 +420,129 @@
 }
 """
 
+
 """
-@api {get} /customer/<id>/history-search Lịch sử tìm kiếm
-@apiName Lịch_sử_tìm_kiếm
+@api {post} /customers/actions/buyvoucher Đặt mua phiếu mua hàng điện tử
+@apiName Mua_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
-@apiDescription Lấy danh sách từ khóa khách hàng đã tìm kiếm
+@apiDescription Khách hàng đặt mua phiếu mua hàng điện tử
 
 
-@apiParam (Path) {Number} id <mark>ID khách hàng</mark>
-@apiParam {String} sort_by <mark>Sắp xếp theo: Mặc định là id</mark>
-@apiParam {String} sort_order <mark>Kiểu sắp xếp: Mặc định asc</mark>
-@apiParam {Number} [limit] <mark>Giới hạn số lượng bản ghi</mark>
+@apiHeader {String} Content-Type <mark>application/json</mark>
+@apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-@apiParamExample URL request:
-https://www.bachhoaxanh.com/api/v1/customer/<id>/history-search?sort_by=id&sort_order=asc&limit=4
+@apiHeaderExample {JSON} Header request:
+{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
 
 
-@apiSuccess {String}    code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
-@apiSuccess {String}    message Thông báo kết quả
-@apiSuccess {Object[]}  data Danh sách thông tin chuỗi tìm kiếm
-@apiSuccess {Number}    data.id ID chuỗi tìm kiếm
-@apiSuccess {String}    data.search_string Chuỗi tìm kiếm
-@apiSuccess {String}    data.search_number Số lần tìm kiếm
-@apiSuccess {Date}      data.searched_at Thời điểm tìm kiếm gần nhất
+@apiParam (Body) {Number} customer_id ID khách hàng
+@apiParam (Body) {Number} voucher_id ID voucher
+@apiParam (Body) {Number} quantity Số lượng
+
+@apiParamExample  {JSON} Body request:
+{
+    "customer_id": 10,
+    "voucher_id": 1,
+    "quantity": 2
+}
+
+
+@apiSuccess {Number} O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String} O.message Thông báo kết quả
 
 @apiSuccessExample {JSON} Success 200:
 {
     "code": 200,
-    "message": "Lấy thông tin sản phẩm thành công!",
+    "message": "Đặt mua phiếu mua hàng điện tử thành công!"
+}
+
+
+@apiError 401-Unauthorized Token hết hạn hoặc không hợp lệ.
+<ul>
+    <li><code>code:</code> 401</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 400:
+{
+    "code": 400,
+    "message": "Sai định dạng URL!"
+}
+@apiErrorExample {JSON} Error 401:
+{
+    "code": 401,
+    "message": "Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi đặt mua phiếu mua hàng: Mô tả lỗi."
+}
+"""
+
+
+"""
+@api {get} /customers/actions/viewvoucher Xem phiếu mua hàng đang sở hữu
+@apiName Xem_phiếu_mua_hàng
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Lấy danh sách phiếu mua hàng khách hàng đang sở hữu
+
+
+@apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
+
+@apiHeaderExample {JSON} Header request:
+{
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+}
+
+
+@apiParam {Number} customer_id <mark>ID khách hàng</mark>
+@apiParam {String=end_time} sort=end_time:asc <mark>Sắp xếp dữ liệu theo cú pháp sau
+<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+
+@apiParamExample URL request:
+{host}/api/v1.0/customers/actions/viewvoucher?customer_id=10&sort=end_time:asc
+
+
+@apiSuccess {Number}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin voucher
+@apiSuccess {Number}    O.data.id ID voucher <code>(Thuộc bảng CustomerVoucher)</code>
+@apiSuccess {String}    O.data.voucher_code Mã voucher
+@apiSuccess {String}    O.data.voucher_name Tên voucher
+@apiSuccess {String}    O.data.content Nội dung
+@apiSuccess {Date}      O.data.end_time Thời hạn voucher <code>(Thuộc bảng CustomerVoucher)</code>
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Lấy thông tin phiếu mua hàng thành công!",
     "data": [
         {
             "id": 1,
-            "search_string": "thit ga",
-            "search_number": 10,
-            "searched_at": "01/06/2021"
+            "voucher_code": "PHM1000K",
+            "voucher_name": "Phiếu mua hàng 1 triệu",
+            "content": "Phiếu mua hàng trị  giá 1.000.000đ",
+            "end_time": "31/12/2022"
         },
         {
             "id": 2,
-            "search_string": "trung",
-            "search_number": 30,
-            "searched_at": "01/06/2021"
-        },
-        {
-            "id": 3,
-            "search_string": "pepsi",
-            "search_number": 15,
-            "searched_at": "01/06/2021"
-        },
-        {
-            "id": 1,
-            "search_string": "banh keo",
-            "search_number": 10,
-            "searched_at": "01/06/2021"
+            "voucher_code": "PHM2000K",
+            "voucher_name": "Phiếu mua hàng 2 triệu",
+            "content": "Phiếu mua hàng trị  giá 2.000.000đ"
+            "end_time": "31/12/2022"
         }
     ]
 }
@@ -488,47 +580,61 @@ https://www.bachhoaxanh.com/api/v1/customer/<id>/history-search?sort_by=id&sort_
 }
 """
 
+
 """
-@api {get} /customer/<id>/voucher Phiếu mua hàng
-@apiName Phiếu_mua_hàng
+@api {get} /customers/actions/historysearch Lịch sử tìm kiếm sản phẩm
+@apiName Lịch_sử_tìm_kiếm
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
-@apiDescription Lấy danh sách phiếu mua hàng khách hàng đang sở hữu
+@apiDescription Lấy danh sách từ khóa khách hàng đã tìm kiếm
 
 
-@apiParam (Path) {Number} id <mark>ID khách hàng</mark>
-@apiParam {String} sort_by=id <mark>Sắp xếp theo cột</mark>
-@apiParam {String} sort_order=asc <mark>Kiểu sắp xếp</mark>
+@apiParam {Number} customer_id <mark>ID khách hàng</mark>
+@apiParam {String=search_string,search_number,searched_at} sort=searched_at:desc <mark>Sắp xếp dữ liệu theo cú pháp sau
+<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
 
 @apiParamExample URL request:
-https://www.bachhoaxanh.com/api/v1/customer/<id>/voucher?sort_by=id&sort_order=asc
+{host}/api/v1.0/customer/actions/historysearch?customer_id=10&sort=searched_at:desc&top=4
 
 
-@apiSuccess {String}    code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
-@apiSuccess {String}    message Thông báo kết quả
-@apiSuccess {Object[]}  data Danh sách thông tin voucher
-@apiSuccess {Number}    data.id ID voucher
-@apiSuccess {String}    data.voucher_code Mã voucher
-@apiSuccess {String}    data.voucher_name Tên voucher
-@apiSuccess {String}    data.content Nội dung
+@apiSuccess {Number}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin chuỗi tìm kiếm
+@apiSuccess {Number}    O.data.id ID chuỗi tìm kiếm
+@apiSuccess {String}    O.data.search_string Chuỗi tìm kiếm
+@apiSuccess {String}    O.data.search_number Số lần tìm kiếm
+@apiSuccess {Date}      O.data.searched_at Thời điểm tìm kiếm gần nhất
 
 @apiSuccessExample {JSON} Success 200:
 {
     "code": 200,
-    "message": "Lấy thông tin phiếu mua hàng thành công!",
+    "message": "Lấy thông tin lịch sử tìm kiếm sản phẩm thành công!",
     "data": [
         {
             "id": 1,
-            "voucher_code": "PHM1000K",
-            "voucher_name": "Phiếu mua hàng 1 triệu",
-            "content": "Phiếu mua hàng trị  giá 1.000.000đ"
+            "search_string": "thit ga",
+            "search_number": 10,
+            "searched_at": "01/06/2021"
         },
         {
             "id": 2,
-            "voucher_code": "PHM2000K",
-            "voucher_name": "Phiếu mua hàng 2 triệu",
-            "content": "Phiếu mua hàng trị  giá 2.000.000đ"
+            "search_string": "trung",
+            "search_number": 30,
+            "searched_at": "01/06/2021"
+        },
+        {
+            "id": 3,
+            "search_string": "pepsi",
+            "search_number": 15,
+            "searched_at": "01/06/2021"
+        },
+        {
+            "id": 1,
+            "search_string": "banh keo",
+            "search_number": 10,
+            "searched_at": "01/06/2021"
         }
     ]
 }

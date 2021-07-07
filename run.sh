@@ -1,1 +1,1 @@
-apidoc -i source/ -o output/
+apidoc -i source/ -o review/

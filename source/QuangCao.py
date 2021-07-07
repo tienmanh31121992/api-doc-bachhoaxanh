@@ -10,24 +10,24 @@
 @apiParam {Number} [brand_id] <mark>ID thương hiệu</mark>
 @apiParam {Number} [product_id] <mark>ID sản phẩm</mark>
 @apiParam {Number} [sector_id] <mark>ID khu vực</mark>
-@apiParam {Number} [campaign_id] <mark>ID khu vực</mark>
-@apiParam {String} position <mark>Vị trí đặt quảng cáo trong website</mark>
+@apiParam {Number} [campaign_id] <mark>ID chiến dịch quảng cáo</mark>
+@apiParam {String} position <mark>Vị trí đặt quảng cáo trên trang web</mark>
 
 @apiParamExample {String} URL request:
-https://www.bachhoaxanh.com/api/v1/ads?campaign_id=1&position=banner
+{host}/api/v1/ads?campaign_id=1&position=banner
 
 
-@apiSuccess {Object}    data Thông tin quảng cáo
-@apiSuccess {Number}    data.id ID quảng cáo
-@apiSuccess {String}    data.code Mã quảng cáo
-@apiSuccess {String}    data.name Tên quảng cáo
-@apiSuccess {String}    data.position Vị trí đặt quảng cáo
-@apiSuccess {Object[]}  data.media Danh sách phương tiện cho quảng cáo
-@apiSuccess {String}    data.media.media_link Đường dẫn đến phương tiện
-@apiSuccess {String}    data.media.page_link Đường dẫn khi click vào phương tiện
-@apiSuccess {String}    message Thông báo kết quả
-@apiSuccess {String}    code Mã trạng thái HTTP
-<br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {Number}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object}    O.data Thông tin quảng cáo
+@apiSuccess {Number}    O.data.id ID quảng cáo
+@apiSuccess {String}    O.data.code Mã quảng cáo
+@apiSuccess {String}    O.data.name Tên quảng cáo
+@apiSuccess {String}    O.data.position Vị trí đặt quảng cáo
+@apiSuccess {Object[]}  O.data.media Danh sách phương tiện cho quảng cáo
+@apiSuccess {String}    O.data.media.media_link Đường dẫn đến phương tiện
+@apiSuccess {String}    O.data.media.page_link Đường dẫn khi click vào phương tiện
 
 
 @apiSuccessExample {JSON} Success 200:
