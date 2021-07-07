@@ -1,62 +1,68 @@
 """
-   @api {get} /articles Xem danh sách mẹo vặt (bài viết)
-   @apiName Xem_danh_sách_bài_viết
+   @api {get} /articles Lấy danh sách bài viết theo nhóm bài viết
+   @apiName Lấy_danh_sách_bài_viết_theo_nhóm
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
-   @apiDescription Hiển thị danh sách các mẹo vặt (bài viết)
+   @apiDescription Hiển thị danh sách các bài viết (mẹo vặt) theo nhóm bài viết
 
-   @apiSuccess {Object} Object Kết quả trả về
+   @apiParam {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
+   @apiParam {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
+   @apiParam {String} article_group.id id nhóm bài viết
+   @apiParam {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
+   @apiParam {Number} per_page số lượng phần tử trong 1 trang
+
+   @apiParamExample {JSON} Body Request:
+   {
+       "sort_by": "date_created",
+       "sort_type": "desc",
+       "id": 1,
+       "page": 0,
+       "per_page": 10
+   }
+
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
-   @apiSuccess {Object[]} Object.data Đối tượng trả về
-   @apiSuccess {Object} Object.data.aritcle_group Đối tượng nhóm bài viết
-   @apiSuccess {String} Object.data.aritcle_group.group_name tên nhóm bài viết
-   @apiSuccess {Object} Object.data.aritcle_group.article Đối tượng bài viết
-   @apiSuccess {String} Object.data.aritcle_group.article.article_name tên bài viết
-   @apiSuccess {String} Object.data.aritcle_group.article.title tiêu đề bài viết
-   @apiSuccess {String} Object.data.aritcle_group.article.thumbnail_link ảnh đại diện bài viết
-   @apiSuccess {String} Object.data.aritcle_group.article.views_count Đếm số lượt xem
-   @apiSuccess {String} Object.data.aritcle_group.article.comments_count Đếm số lượt comment
-
+   @apiSuccess {Object} Object.data Đối tượng trả về
+   @apiSuccess {String} Object.data.group_name tên nhóm bài viết
+   @apiSuccess {Object[]} Object.data.article Đối tượng bài viết
+   @apiSuccess {String} Object.data.article.article_name tên bài viết
+   @apiSuccess {String} Object.data.article.title tiêu đề bài viết
+   @apiSuccess {String} Object.data.article.thumbnail_link ảnh đại diện bài viết
+   @apiSuccess {Number} Object.data.article.views_count Đếm số lượt xem
+   @apiSuccess {Object} Object.data.paging Đối tượng phân trang
+   @apiSuccess {String} Object.data.paging.page Số thứ tự trang
+   @apiSuccess {String} Object.data.paging.per_page số lượng phần tử mỗi trang
+   @apiSuccess {String} Object.data.paging.total_items tổng số lượng phần tử
+   @apiSuccess {String} Object.data.paging.total_pages tổng số trang
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Load danh sách bài viết thành công!",
+       "message": "Hiển thị danh sách bài viết thành công!",
        "data": {
-            "article_group": [
-                   {
-                       "group_name": "Mẹo hay mới",
-                       "article": [
-                             {
-                                 "article_name": "Vì sao lấy mẫu xét nghiệm Covid lúc nào cũng lấy nhóm 10 hoặc 15 người?",
-                                 "title": "Nhiều người khi đi xét nghiệm luôn thắc mắc câu hỏi vì sao...",
-                                 "thumbnail_link": "article1.png",
-                                 "views_count": 450,
-                                 "comments_count": 0
-                             },
-                             {
-                                 "article_name": "Nấm mối là nấm gì mà giá 1 triệu/kg vẫn có người sẵn sàng mua?",
-                                 "title": "Nấm mối là nguyên liệu không thể thiếu trong các món ăn ngon, hấp dẫn...",
-                                 "thumbnail_link": "article2.png",
-                                 "views_count": 550,
-                                 "comments_count": 1
-                             }
-                       ]
-                   },
-                   {
-                       "group_name": "Bạn đọc chia sẻ",
-                       "article": [
-                             {
-                                 "article_name": "Chàng sinh viên chia sẻ cách làm trắng răng đơn giản bằng nguyên liệu nhà nào cũng có",
-                                 "title": "Làm trắng răng tại nhà vô cùng đơn giản chỉ bằng những nguyên liệu tự nhiên...",
-                                 "thumbnail_link": "article3.png",
-                                 "views_count": 650,
-                                 "comments_count": 1
-                             }
-                       ]
-                   }
-            ]
+             "group_name": "Mẹo hay mới",
+             "article": [
+                {
+                    "article_name": "Vì sao lấy mẫu xét nghiệm Covid lúc nào cũng lấy nhóm 10 hoặc 15 người?",
+                    "title": "Nhiều người khi đi xét nghiệm luôn thắc mắc câu hỏi vì sao...",
+                    "thumbnail_link": "article1.png",
+                    "views_count": 450,
+                    "comments_count": 0
+                },
+                {
+                    "article_name": "Nấm mối là nấm gì mà giá 1 triệu/kg vẫn có người sẵn sàng mua?",
+                    "title": "Nấm mối là nguyên liệu không thể thiếu trong các món ăn ngon, hấp dẫn...",
+                    "thumbnail_link": "article2.png",
+                    "views_count": 550,
+                    "comments_count": 1
+                }
+             ],
+             "paging": {
+                    "page":0,
+                    "per_page": 10,
+                    "total_items": 1000,
+                    "total_pages": 100
+             }
        }
    }
 
@@ -79,7 +85,97 @@
     @apiErrorExample {JSON} Error 500:
     {
         "code": 500,
-        "message": "Lỗi load danh sách bài viết!"
+        "message": "Lỗi hiển thị danh sách bài viết!"
+    }
+"""
+"""
+   @api {get} /articles Lấy danh sách bài viết theo tag
+   @apiName Lấy_danh_sách_bài_viết_theo_tag
+   @apiGroup Mẹo_vặt
+   @apiVersion  1.0.0
+   @apiDescription Hiển thị danh sách các bài viết (mẹo vặt) theo tag
+
+   @apiParam {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
+   @apiParam {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
+   @apiParam {String} tag.id id tag bài viết
+   @apiParam {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
+   @apiParam {Number} per_page số lượng phần tử trong 1 trang
+
+   @apiParamExample {JSON} Body Request:
+   {
+       "sort_by": "date_created",
+       "sort_type": "desc",
+       "id": 1,
+       "page": 0,
+       "per_page": 10
+   }
+
+   @apiSuccess {String} Object.code Mã trạng thái HTTP
+   @apiSuccess {String} Object.message Thông báo kết quả
+   @apiSuccess {Object} Object.data Đối tượng trả về
+   @apiSuccess {String} Object.data.tag_name tên tag
+   @apiSuccess {Object[]} Object.data.article Đối tượng bài viết
+   @apiSuccess {String} Object.data.article.article_name tên bài viết
+   @apiSuccess {String} Object.data.article.title tiêu đề bài viết
+   @apiSuccess {String} Object.data.article.thumbnail_link ảnh đại diện bài viết
+   @apiSuccess {Number} Object.data.article.views_count Đếm số lượt xem
+   @apiSuccess {Object} Object.data.paging Đối tượng phân trang
+   @apiSuccess {String} Object.data.paging.page Số thứ tự trang
+   @apiSuccess {String} Object.data.paging.per_page số lượng phần tử mỗi trang
+   @apiSuccess {String} Object.data.paging.total_items tổng số lượng phần tử
+   @apiSuccess {String} Object.data.paging.total_pages tổng số trang
+
+   @apiSuccessExample {JSON} Success 200:
+   {
+       "code": 200,
+       "message": "Hiển thị danh sách bài viết thành công!",
+       "data": {
+             "group_name": "bạch tuộc",
+             "article": [
+                {
+                    "article_name": "Cách chế biến món bạch tuộc chiên giòn",
+                    "title": "Có rất nhiều cách chế biến món bạch tuộc chiên giòn...",
+                    "thumbnail_link": "article1.png",
+                    "views_count": 450,
+                    "comments_count": 0
+                },
+                {
+                    "article_name": "Các cách chọn bạch tuộc ngon",
+                    "title": "Hiện nay trên thị trường có rất nhiều loại bạch tuộc...",
+                    "thumbnail_link": "article2.png",
+                    "views_count": 550,
+                    "comments_count": 1
+                }
+             ],
+             "paging": {
+                    "page":0,
+                    "per_page": 10,
+                    "total_items": 1000,
+                    "total_pages": 100
+             }
+       }
+   }
+
+   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
+    <ul>
+        <li><code>code:</code> 400</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
+    <ul>
+        <li><code>code:</code> 500</li>
+        <li><code>message:</code> Thông báo lỗi</li>
+    </ul>
+
+    @apiErrorExample {JSON} Error 400:
+    {
+        "code": 400,
+        "message": "Yêu cầu không hợp lệ!"
+    }
+    @apiErrorExample {JSON} Error 500:
+    {
+        "code": 500,
+        "message": "Lỗi hiển thị danh sách bài viết!"
     }
 """
 """
@@ -89,31 +185,27 @@
    @apiVersion  1.0.0
    @apiDescription Khách hàng vào xem bài viết
 
-   @apiParam  {Number} article_id id bài viết
+   @apiParam  {Number} article.id id bài viết
 
    @apiParamExample  {JSON} Cách truyền parameter:
-   https://www.bachhoaxanh.com/api/v1/articles/view-article?article_id=1
+   {host}/api/v1.0/articles/view-article?id=1
    
-   @apiSuccess {Object} Object Kết quả trả về
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
-   @apiSuccess {Object[]} Object.data Đối tượng trả về
+   @apiSuccess {Object} Object.data Đối tượng trả về
    @apiSuccess {String} Object.data.article_name tên bài viết
    @apiSuccess {String} Object.data.title tiêu đề bài viết
    @apiSuccess {String} Object.data.content_html nội dung bài viết với định dạng html
    @apiSuccess {String} Object.data.created_at ngày tạo bài viết
    @apiSuccess {String} Object.data.updated_at ngày sửa bài viết
-   @apiSuccess {Object} Object.data.tag Đối tượng tag bài viết
-   @apiSuccess {Object} Object.data.same_tag_suggestion Đối tượng gợi ý cùng tag
-   @apiSuccess {Object} Object.data.similar_tag_suggestion Đối tượng gợi ý giống tag
-   @apiSuccess {Number} Object.data.tag_id id tag bài viết
-   @apiSuccess {String} Object.data.tag_name tên tag
-   @apiSuccess {Number} Object.data.thumbnail_link ảnh đại diện bài viết
+   @apiSuccess {Object[]} Object.data.tag Đối tượng tag bài viết
+   @apiSuccess {Number} Object.data.tag.tag_id id tag bài viết
+   @apiSuccess {String} Object.data.tag.tag_name tên tag
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Load bài viết thành công!",
+       "message": "Hiển thị bài viết thành công!",
        "data": {
             "article_name": "Nấm mối là nấm gì mà giá 1 triệu/kg vẫn có người sẵn sàng mua?",
             "title": "Nấm mối là nguyên liệu không thể thiếu trong các món ăn ngon...",
@@ -133,33 +225,6 @@
                      "tag_id": 3,
                      "tag_name": "các món ngon từ nấm"
                  }
-            ],
-            "similar_tag_suggestion": [
-                 {  
-                      "tag_id": 1,
-                      "article_name": "Cách phân biệt nấm ăn được và nấm độc"
-                 },
-                 {  
-                      "tag_id": 3,
-                      "article_name": "Đi mua nấm nên chú ý điều này!"
-                 }
-            ],
-            "same_tag_suggestion": [
-                  {
-                      "tag_id": 2,
-                      "article_name": "Cách làm nấm mối xào ngon nhất",
-                      "thumbnail_link": "article1.png"
-                  },
-                  {
-                      "tag_id": 2,
-                      "article_name": "Cách sơ chế nấm mối",
-                      "thumbnail_link": "article2.png"
-                  },
-                  {
-                      "tag_id": 2,
-                      "article_name": "Cách làm nấm mối hấp ngon, bổ, rẻ",
-                      "thumbnail_link": "article3.png"
-                  }
             ]   
        }
    }
