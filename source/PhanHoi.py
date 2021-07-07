@@ -87,13 +87,16 @@
     <li><code>1:</code> Đánh giá</li>
     <li><code>2:</code> Bình luận</li>
 </ul>
-@apiParam {String=created_at} sort=created_at:desc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=created_at} sort=-created_at <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥0} page=0 <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} per_page=1 <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/feedbacks?product_id=10&feedback_type=1&sort_by=created_at:desc&page=0&per_page=2
+{host}/api/v1.0/feedbacks?product_id=10&feedback_type=1&sort_by=-created_at&page=0&per_page=2
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP

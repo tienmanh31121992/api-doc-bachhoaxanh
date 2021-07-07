@@ -194,13 +194,16 @@
     <li><code>Không có:</code> Lấy cả hai</li>
     <li><code>promotion_id:</code> Lấy nhóm sản phẩm có <b>ID khuyến mãi<b></li>
 </ul>
-@apiParam {String=id,name,hot,new} sort=new:desc,id:asc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=id,name,hot,new} sort=-new,+id <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥0} [page] <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} [per_page] <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/productgroups?hot=1&sort=new:desc,id:asc&page=0&per_page=5
+{host}/api/v1.0/productgroups?hot=1&sort=-new,+id&page=0&per_page=5
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
@@ -361,13 +364,16 @@
     <li><code>Không có:</code> Lấy cả hai</li>
     <li><code>promotion_id:</code> Lấy thương hiệu có <b>ID khuyến mãi<b></li>
 </ul>
-@apiParam {String=id,name,hot,new} sort=name:asc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=id,name,hot,new} sort=+name <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥0} [page] <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} [per_page] <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/brands?product_group_id=9&sort=name:asc&page=0&per_page=3
+{host}/api/v1.0/brands?product_group_id=9&sort=+name&page=0&per_page=3
 
 
 @apiSuccess {String}    O.code Mã trạng thái HTTP
@@ -501,13 +507,16 @@
     <li><code>Không có:</code> Lấy cả hai</li>
     <li><code>promotion_id:</code> Lấy thương hiệu có <b>ID khuyến mãi<b></li>
 </ul>
-@apiParam {String=id,name,hot,new} sort=name:asc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=id,name,hot,new} sort=+name <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥0} page=0 <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} per_page=1 <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/products?product_group_id=10&brand_id=9&sort=name:asc&page=0&per_page=4
+{host}/api/v1.0/products?product_group_id=10&brand_id=9&sort=+name&page=0&per_page=4
 
 
 @apiSuccess {String}    O.code Mã trạng thái HTTP
@@ -834,13 +843,16 @@
 
 
 @apiParam {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=view_number,view_at} sort=view_at:desc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=view_number,view_at} sort=-view_at <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
 
 
 @apiParamExample URL request:
-{host}/api/v1.0/products/historyview?customer_id=10&sort=view_at:desc&top=4
+{host}/api/v1.0/products/historyview?customer_id=10&sort=-view_at&top=4
 
 
 @apiSuccess {String}    O.code Mã trạng thái HTTP
@@ -1031,13 +1043,16 @@
 
 
 @apiParam {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=buy_number,buy_at} sort=buy_at:desc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam {String=buy_number,buy_at} sort=-buy_at <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
 
 
 @apiParamExample URL request:
-{host}/api/v1.0/products/historybuy?customer_id=10&sort=buy_at:desc&top=4
+{host}/api/v1.0/products/historybuy?customer_id=10&sort=-buy_at&top=4
 
 
 @apiSuccess {String}    O.code Mã trạng thái HTTP

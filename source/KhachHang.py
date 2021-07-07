@@ -422,7 +422,7 @@
 
 
 """
-@api {post} /customers/actions/buyvoucher Đặt mua phiếu mua hàng điện tử
+@api {post} /customers/<customer_id>/voucher Đặt mua phiếu mua hàng điện tử
 @apiName Mua_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -439,16 +439,13 @@
 }
 
 
-@apiParam (Body) {Number} customer_id ID khách hàng
-@apiParam (Body) {Number} voucher_id ID voucher
-@apiParam (Body) {Number} quantity Số lượng
+@apiParam (Path) {Number} customer_id ID khách hàng
 
-@apiParamExample  {JSON} Body request:
-{
-    "customer_id": 10,
-    "voucher_id": 1,
-    "quantity": 2
-}
+@apiParam {Number} voucher_id ID voucher
+@apiParam {Number} quantity Số lượng
+
+@apiParamExample  {JSON} URL request:
+{host}/api/v1.0/customers/10/voucher?voucher_id=1&quantity=2
 
 
 @apiSuccess {Number} O.code Mã trạng thái HTTP
@@ -497,7 +494,7 @@
 
 
 """
-@api {get} /customers/actions/viewvoucher Xem phiếu mua hàng đang sở hữu
+@api {get} /customers/<customer_id>/voucher Xem phiếu mua hàng đang sở hữu
 @apiName Xem_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -512,12 +509,15 @@
 }
 
 
-@apiParam {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=end_time} sort=end_time:asc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
+@apiParam {String=end_time} sort=+end_time <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 
 @apiParamExample URL request:
-{host}/api/v1.0/customers/actions/viewvoucher?customer_id=10&sort=end_time:asc
+{host}/api/v1.0/customers/10/voucher?sort=+end_time
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
@@ -587,20 +587,23 @@
 
 
 """
-@api {get} /customers/actions/historysearch Lịch sử tìm kiếm sản phẩm
+@api {get} /customers/<customer_id>/historysearch Lịch sử tìm kiếm sản phẩm
 @apiName Lịch_sử_tìm_kiếm
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
 @apiDescription Lấy danh sách từ khóa khách hàng đã tìm kiếm
 
 
-@apiParam {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=search_string,search_number,searched_at} sort=searched_at:desc <mark>Sắp xếp dữ liệu theo cú pháp sau
-<br><code>Trường dữ liệu:Kiểu sắp xếp</code></mark>
+@apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
+@apiParam {String=search_string,search_number,searched_at} sort=-searched_at <mark>Sắp xếp dữ liệu</mark>
+<ul>
+    <li><code>+:</code> Tăng dần</li>
+    <li><code>-:</code> Giảm dần</li>
+</ul>
 @apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
 
 @apiParamExample URL request:
-{host}/api/v1.0/customer/actions/historysearch?customer_id=10&sort=searched_at:desc&top=4
+{host}/api/v1.0/customer/10/historysearch?sort=-searched_at&top=4
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
