@@ -462,6 +462,11 @@
 }
 
 
+@apiError 400-BadRequest Không thể xử lý yêu cầu.
+<ul>
+    <li><code>code:</code> 400</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
 @apiError 401-Unauthorized Token hết hạn hoặc không hợp lệ.
 <ul>
     <li><code>code:</code> 401</li>

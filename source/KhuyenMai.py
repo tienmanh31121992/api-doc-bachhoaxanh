@@ -19,13 +19,18 @@
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
-@apiSuccess {Object}    O.data Danh sách thông tin khuyến mãi
+@apiSuccess {Object[]}  O.data Danh sách thông tin khuyến mãi
 @apiSuccess {Number}    O.data.id ID sản phẩm
 @apiSuccess {String}    O.data.promotion_code Mã khuyến mãi
 @apiSuccess {String}    O.data.promotion_name Tên khuyến mãi
 @apiSuccess {String}    O.data.content Nội dung khuyến mãi
 @apiSuccess {String}    O.data.image_link Link lưu ảnh khuyến mãi
 @apiSuccess {Number}    O.data.promotion_type Loại khuyến mãi
+@apiSuccess {Object}    O.paging Thông tin phân trang
+@apiSuccess {Number}    O.paging.page Vị trí trang
+@apiSuccess {Number}    O.paging.per_page Số phần tử trên một trang
+@apiSuccess {Number}    O.paging.total_page Tổng số trang
+@apiSuccess {Number}    O.paging.total_item Tổng phần tử
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -47,8 +52,30 @@
             "content": "Hàng ngàn sản phẩm có giá khuyến mãi cực sốc, giảm đến 50%",
             "image_link": "image2.png",
             "rule_id": 2
+        },
+        {
+            "id": 3,
+            "promotion_code": "KM0003",
+            "promotion_name": "Tặng 40.000đ",
+            "content": "Dành cho người thân và bạn bè sau khi mua online tại BachhoaXANH.com",
+            "image_link": "image3.png",
+            "rule_id": 3
+        },
+        {
+            "id": 4,
+            "promotion_code": "KM0004",
+            "promotion_name": "Miễn phí giao",
+            "content": "Cho đơn từ 250.000đ với khách hàng mua online tại BachhoaXANH.com",
+            "image_link": "image4.png",
+            "rule_id": 4
         }
-    ]
+    ],
+    "paging": {
+        "page": 0,
+        "per_page": 4,
+        "total_page": 1,
+        "total_item": 4
+    }
 }
 
 

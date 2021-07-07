@@ -28,7 +28,7 @@
     <li><code>2:</code> Bình luận</li>
 </ul>
 @apiParam (Body) {String} content Nội dung bình luận, đánh giá
-@apiParam (Body) {String[]} media Link ảnh, video của bình luận, đánh giá
+@apiParam (Body) {String[]} media Danh sách đường dẫn ảnh của bình luận, đánh giá
 
 @apiParamExample {JSON} Body request:
 {

@@ -367,7 +367,7 @@
 @apiParam {Number=≥1} [per_page] <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/brands?product_group_id=9&sort=name:asc
+{host}/api/v1.0/brands?product_group_id=9&sort=name:asc&page=0&per_page=3
 
 
 @apiSuccess {String}    O.code Mã trạng thái HTTP
@@ -389,6 +389,11 @@
     <li><code>0:</code> False</li>
     <li><code>1:</code> True</li>
 </ul>
+@apiSuccess {Object}    O.paging Thông tin phân trang
+@apiSuccess {Number}    O.paging.page Vị trí trang
+@apiSuccess {Number}    O.paging.per_page Số phần tử trên một trang
+@apiSuccess {Number}    O.paging.total_page Tổng số trang
+@apiSuccess {Number}    O.paging.total_item Tổng phần tử
 
 
 @apiSuccessExample {JSON} Success 200:
@@ -423,7 +428,13 @@
             "hot": 0,
             "new": 0,
         }
-    ]
+    ],
+    "paging": {
+        "page": 0,
+        "per_page": 3,
+        "total_page": 4,
+        "total_item": 10
+    }
 }
 
 @apiError 400-BadRequest Không thể xử lý yêu cầu.
