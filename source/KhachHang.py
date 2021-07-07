@@ -211,7 +211,7 @@
 """
 
 """
-@api {put} /customers/actions/updateinfo Cập nhật thông tin
+@api {patch} /customers/actions/updateinfo Cập nhật thông tin
 @apiName Cập_nhật_thông_tin
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
