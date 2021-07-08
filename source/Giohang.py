@@ -1,14 +1,12 @@
 """
-   @api {get} /cart Xem giỏ hàng
+   @api {get} /cart/<cart_id> Xem giỏ hàng
    @apiName Xem_giỏ_hàng
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
    @apiDescription Khách hàng vào xem giỏ hàng
 
-   @apiParam {Number} cart.id id giỏ hàng
-
-   @apiParamExample {JSON} Cách truyền Parameter:
-   {host}/api/v1.0/cart?id=1
+   @apiParamExample {JSON} Cách gọi URL:
+   {host}/api/v1.0/cart/1
 
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
@@ -98,12 +96,17 @@
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
    @apiDescription Khách hàng thêm sản phẩm, giỏ hàng được thêm vào DB
-
-   @apiParam  {Number} product.id id Sản phẩm
-   @apiParam  {Number} cartproduct.quantity số lượng mua
    
-   @apiParamExample {JSON} cách truyền parameter:
-   {host}/api/v1.0/cart/actions/add-cart?id=1&quantity=1
+   @apiHeader {String} Content-Type <mark>application/json</mark>
+
+   @apiParam  {Number} product_id id Sản phẩm
+   @apiParam  {Number} quantity số lượng mua
+   
+   @apiParamExample {JSON} Body Request:
+   {
+       "product_id": 1,
+       "quantity": 1
+   }
    
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
@@ -162,19 +165,17 @@
    @apiVersion  1.0.0
    @apiDescription Khách hàng thêm sản phẩm vào giỏ hàng
 
-   @apiParam  {Number} cart.id id giỏ hàng
-   @apiParam  {Number} product.id id Sản phẩm
-   @apiParam  {Number} cartproduct.quantity số lượng mua
+   @apiHeader {String} Content-Type <mark>application/json</mark>
+
+   @apiParam  {Number} cart_id id giỏ hàng
+   @apiParam  {Number} product_id id Sản phẩm
+   @apiParam  {Number} quantity số lượng mua
    
-   @apiParamExample  {JSON} Body Request:
-   { 
-      "cart": {
-         "id": 1
-      },   
-      "product": {
-         "id": 2
-      },
-      "quantity": 2
+   @apiParamExample  {JSON} Body request:
+   {
+       "cart_id": 1,
+       "product_id": 2,
+       "quantity": 1
    }
 
    @apiSuccess {String} Object.code Mã trạng thái HTTP
@@ -236,16 +237,14 @@
 """
 
 """
-  @api {delete} /cart/actions/delete-item xóa sản phẩm
+  @api {delete} /cart/<cartproduct_id> xóa sản phẩm
    @apiName Xóa_sản_phẩm
    @apiGroup Giỏ_hàng
    @apiVersion 1.0.0
    @apiDescription Khách hàng xóa sản phẩm khỏi giỏ hàng
    
-   @apiParam  {Number} cartproduct.id id giỏ hàng - sản phẩm
-   
-   @apiParamExample  {JSON} Cách truyền parameter:
-   {host}/api/v1.0/cart/actions/delete-item?id=1
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/cart/1
    
    @apiSuccess {String} code Mã trạng thái HTTP
     <br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark><br>
@@ -281,17 +280,24 @@
 """
 
 """
-   @api {patch} /cart/actions/update-quantity Cập nhật số lượng của một sản phẩm
+   @api {patch} /cart/<cart_id> Cập nhật số lượng của một sản phẩm
    @apiName Cập_nhật_số_lượng
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
    @apiDescription Khách hàng thay đổi số lượng một sản phẩm
+   
+   @apiHeader {String} Content-Type <mark>application/json</mark>
 
-   @apiParam  {Number} cartproduct.id id giỏ hàng - sản phẩm
-   @apiParam  {Number} cartproduct.quantity số lượng mua
-
-   @apiParamExample  {JSON} Cách truyền parameter:
-   {host}/api/v1.0/cart/actions/update-quantity?id=1&quantity=5
+   @apiParam  {Number} product_id id sản phẩm
+   @apiParam  {Number} quantity số lượng mua
+   
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/cart/1
+   @apiParamExample  {JSON} Body Request:
+   { 
+       "product_id": 1,
+       "quantity": 2
+   }
    
    @apiSuccess {String} code Mã trạng thái HTTP
    @apiSuccess {String} message Thông báo kết quả
@@ -340,17 +346,14 @@
     }
 """
 """
-   @api {delete} /cart/actions/delete-cart Xóa giỏ hàng
+   @api {delete} /cart/<cart_id> Xóa giỏ hàng
    @apiName Xóa_giỏ_hàng
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
    @apiDescription Khách hàng xóa giỏ hàng
-
-
-   @apiParam {Number} cart.id id Giỏ hàng 
-
-   @apiParamExample {JSON} Cách truyền parameter:
-   {host}/api/v1.0/cart/actions/delete-cart?id=1
+   
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/cart/1
    
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
