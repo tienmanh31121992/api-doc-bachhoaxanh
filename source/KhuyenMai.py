@@ -12,7 +12,7 @@
 @apiParam {Number=≥0} [page=0] <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} [per_page=1] <mark>Số item trên một trang</mark>
 
-@apiParamExample {String} URL request:
+@apiParamExample  URL request:
 {host}/api/v1.0/promotions?customer_id=10?page=0&per_page=4
 
 
@@ -20,7 +20,7 @@
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object[]}  O.data Danh sách thông tin khuyến mãi
-@apiSuccess {Number}    O.data.id ID sản phẩm
+@apiSuccess {Number}    O.data.promotion_id ID khuyến mãi
 @apiSuccess {String}    O.data.promotion_code Mã khuyến mãi
 @apiSuccess {String}    O.data.promotion_name Tên khuyến mãi
 @apiSuccess {String}    O.data.content Nội dung khuyến mãi
@@ -38,7 +38,7 @@
     "message": "Lấy danh sách khuyến mãi!",
     "data": [
         {
-            "id": 1,
+            "promotion_id": 1,
             "promotion_code": "KM0001",
             "promotion_name": "Miễn phí giao",
             "content": "Miễn phí giao cho 5 đơn đầu tiên từ 100.000đ, không áp dụng hàng to, nặng",
@@ -46,7 +46,7 @@
             "rule_id": 1
         },
         {
-            "id": 2,
+            "promotion_id": 2,
             "promotion_code": "KM0002",
             "promotion_name": "Khuyến mãi đến 50%",
             "content": "Hàng ngàn sản phẩm có giá khuyến mãi cực sốc, giảm đến 50%",
@@ -54,7 +54,7 @@
             "rule_id": 2
         },
         {
-            "id": 3,
+            "promotion_id": 3,
             "promotion_code": "KM0003",
             "promotion_name": "Tặng 40.000đ",
             "content": "Dành cho người thân và bạn bè sau khi mua online tại BachhoaXANH.com",
@@ -62,7 +62,7 @@
             "rule_id": 3
         },
         {
-            "id": 4,
+            "promotion_id": 4,
             "promotion_code": "KM0004",
             "promotion_name": "Miễn phí giao",
             "content": "Cho đơn từ 250.000đ với khách hàng mua online tại BachhoaXANH.com",

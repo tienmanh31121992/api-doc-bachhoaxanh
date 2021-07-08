@@ -87,23 +87,24 @@
     <li><code>1:</code> Đánh giá</li>
     <li><code>2:</code> Bình luận</li>
 </ul>
-@apiParam {String=created_at} sort=-created_at <mark>Sắp xếp dữ liệu</mark>
+@apiParam {String=created_at,likes} sort=-created_at <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
 <ul>
-    <li><code>+:</code> Tăng dần</li>
-    <li><code>-:</code> Giảm dần</li>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
 </ul>
 @apiParam {Number=≥0} page=0 <mark>Vị trí trang yêu cầu</mark>
 @apiParam {Number=≥1} per_page=1 <mark>Số item trên một trang</mark>
 
 @apiParamExample URL request:
-{host}/api/v1.0/feedbacks?product_id=10&feedback_type=1&sort_by=-created_at&page=0&per_page=2
+{host}/api/v1.0/feedbacks?product_id=10&feedback_type=1&sort=-created_at&page=0&per_page=2
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object[]}  O.data Danh sách bình luận, đánh giá
-@apiSuccess {Number}    O.data.id ID bình luận, đánh giá
+@apiSuccess {Number}    O.data.feedback_id ID bình luận, đánh giá
 @apiSuccess {Number}    O.data.parent_id ID bình luận, đánh giá gốc
 @apiSuccess {Number}    O.data.feedback_type Loại bình luận, đánh giá
 <ul>
@@ -116,7 +117,7 @@
 @apiSuccess {Number}    O.data.likes Lượt thích
 @apiSuccess {String}    O.data.author_name Tên tác giả
 @apiSuccess {Object[]}  O.data.child Danh sách các bình luận, đánh giá con
-@apiSuccess {Number}    O.data.child.id ID bình luận, đánh giá
+@apiSuccess {Number}    O.data.child.feedback_id ID bình luận, đánh giá
 @apiSuccess {Number}    O.data.child.parent_id ID bài viết gốc
 @apiSuccess {Number}    O.data.child.feedback_type Loại bình luận, đánh giá
 <ul>
@@ -140,7 +141,7 @@
     "message": "Lấy danh sách đánh giá thành công!",
     "data": [
         {
-            "id": 1,
+            "feedback_id": 1,
             "parent_id": 0,
             "rating": 5,
             "feedback_type": 1,
@@ -155,7 +156,7 @@
             "child": null
         },
         {
-            "id": 2,
+            "feedback_id": 2,
             "parent_id": 0,
             "rating": 5,
             "feedback_type": 1,
@@ -213,16 +214,16 @@
 """
 
 """
-@api {post} /feedbacks/<id>/likes Thích bình luận đánh giá
+@api {post} /feedbacks/<feedback_id>/likes Thích bình luận đánh giá
 @apiName Thích_bình_luận_đánh_giá
 @apiGroup Bình_luận_đánh_giá
 @apiVersion 1.0.0
 @apiDescription Thích một bình luận đánh giá
 
 
-@apiParam (Path) {Number} id <mark>ID bình luận, đánh giá</mark>
+@apiParam (Path) {Number} feedback_id <mark>ID bình luận, đánh giá</mark>
 
-@apiParamExample {String} URL request:
+@apiParamExample URL request:
 {host}/api/v1.0/feedbacks/10/likes
 
 

@@ -6,7 +6,7 @@
 @apiDescription Lấy danh sách khu vực
 
 
-@apiParamExample {JSON} URL request:
+@apiParamExample URL request:
 {host}/api/v1.0/sectors
 
 
@@ -14,19 +14,19 @@
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object[]}  O.data Danh sách thông tin khu vực
-@apiSuccess {Number}    O.data.id ID khu vực
+@apiSuccess {Number}    O.data.sector_id ID khu vực
 @apiSuccess {Number}    O.data.parent_id ID khu vực cha
 @apiSuccess {String}    O.data.code Mã khu vực
 @apiSuccess {String}    O.data.name Tên khu vực
 @apiSuccess {Number}    O.data.level Cấp khu vực
 @apiSuccess {Object[]}  O.data.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    O.data.child.id ID khu vực
+@apiSuccess {Number}    O.data.child.sector_id ID khu vực
 @apiSuccess {Number}    O.data.child.parent_id ID khu vực cha
 @apiSuccess {String}    O.data.child.code Mã khu vực
 @apiSuccess {String}    O.data.child.name Tên khu vực
 @apiSuccess {Number}    O.data.child.level Cấp khu vực
 @apiSuccess {Object[]}  O.data.child.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    O.data.child.child.id ID khu vực
+@apiSuccess {Number}    O.data.child.child.sector_id ID khu vực
 @apiSuccess {Number}    O.data.child.child.parent_id ID khu vực cha
 @apiSuccess {String}    O.data.child.child.code Mã khu vực
 @apiSuccess {String}    O.data.child.child.name Tên khu vực
@@ -38,21 +38,21 @@
     "message": "Lấy danh sách khu vực thành công!",
     "data": [
         {
-            "id": 1,
+            "sector_id": 1,
             "parent_id": 0,
             "code": "NSP0001",
             "name": "TP. Hồ Chí Minh",
             "level": 1,
             "child": [
                 {
-                    "id": 68,
+                    "sector_id": 68,
                     "parent_id": 1,
                     "code": "NSP0068",
                     "name": "Quận 1",
                     "level": 2,
                     "child": [
                          {
-                            "id": 70,
+                            "sector_id": 70,
                             "parent_id": 68,
                             "code": "NSP0068",
                             "name": "An Khánh",
@@ -61,14 +61,14 @@
                     ]
                 },
                 {
-                    "id": 69,
+                    "sector_id": 69,
                     "parent_id": 1,
                     "code": "NSP0069",
                     "name": "Quận 2",
                     "level": 2,
                     "child": [
                          {
-                            "id": 71,
+                            "sector_id": 71,
                             "parent_id": 69,
                             "code": "NSP0071",
                             "name": "Nhà Thờ",
@@ -79,21 +79,21 @@
             ]
         },
         {
-            "id": 2,
+            "sector_id": 2,
             "parent_id": 0,
             "code": "NSP0001",
             "name": "An Giang",
             "level": 1,
             "child": [
                 {
-                    "id": 80,
+                    "sector_id": 80,
                     "parent_id": 2,
                     "code": "NSP0069",
                     "name": "TP. Châu Đốc",
                     "level": 2,
                     "child": [
                          {
-                            "id": 82,
+                            "sector_id": 82,
                             "parent_id": 80,
                             "code": "NSP0071",
                             "name": "Hòa An",

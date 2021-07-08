@@ -13,17 +13,17 @@
 @apiParam {Number} [campaign_id] <mark>ID chiến dịch quảng cáo</mark>
 @apiParam {String} position <mark>Vị trí đặt quảng cáo trên trang web</mark>
 
-@apiParamExample {String} URL request:
-{host}/api/v1/ads?campaign_id=1&position=banner
+@apiParamExample URL request:
+{host}/api/v1.0/ads?campaign_id=1&position=banner
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object}    O.data Thông tin quảng cáo
-@apiSuccess {Number}    O.data.id ID quảng cáo
-@apiSuccess {String}    O.data.code Mã quảng cáo
-@apiSuccess {String}    O.data.name Tên quảng cáo
+@apiSuccess {Number}    O.data.promotion_id ID quảng cáo
+@apiSuccess {String}    O.data.promotion_code Mã quảng cáo
+@apiSuccess {String}    O.data.promotion_name Tên quảng cáo
 @apiSuccess {String}    O.data.position Vị trí đặt quảng cáo
 @apiSuccess {Object[]}  O.data.media Danh sách phương tiện cho quảng cáo
 @apiSuccess {String}    O.data.media.media_link Đường dẫn đến phương tiện
@@ -35,9 +35,9 @@
     "code": 200,
     "message": "Lấy quảng cáo thành công!",
     "data": {
-        "id": 1,
-        "code": "BANNER0001",
-        "name": "Quảng cáo banner 1",
+        "promotion_id": 1,
+        "promotion_code": "BANNER0001",
+        "promotion_name": "Quảng cáo banner 1",
         "position": "banner",
         "media": [
             {

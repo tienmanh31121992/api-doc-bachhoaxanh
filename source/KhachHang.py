@@ -119,7 +119,7 @@
 @apiSuccess {String} O.mesage Thông báo kết quả
 @apiSuccess {String} O.token Chuỗi Token
 @apiSuccess {Object} O.data Thông tin của khách hàng
-@apiSuccess {Number} O.data.id ID khách hàng
+@apiSuccess {Number} O.data.customer_id ID khách hàng
 @apiSuccess {String} O.data.customer_code Mã khách hàng
 @apiSuccess {String} O.data.customer_name Tên khách hàng
 @apiSuccess {Number} O.data.gender Giới tính khách hàng
@@ -147,7 +147,7 @@
     "message": "Đăng nhập thành công!",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
     "data": {
-        "id": 1,
+        "customer_id": 10,
         "customer_code": "A0000001",
         "customer_name": "Tiến Mạnh",
         "gender": 1,
@@ -211,7 +211,7 @@
 """
 
 """
-@api {patch} /customers/actions/updateinfo Cập nhật thông tin
+@api {patch} /customers/<customer_id> Cập nhật thông tin
 @apiName Cập_nhật_thông_tin
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -228,7 +228,12 @@
 }
 
 
-@apiParam (Body) {Number} id ID khách hàng
+@apiParam (Path) {Number} customer_id ID khách hàng
+
+@apiParamExample URL request:
+{host}/api/v1.0/customers/10
+
+@apiParam (Body) {Number} customer_id ID khách hàng
 @apiParam (Body) {String} customer_code Mã khách hàng
 @apiParam (Body) {String} customer_name Tên khách hàng
 @apiParam (Body) {String} customer_phone Số điện thoại
@@ -251,7 +256,7 @@
 
 @apiParamExample {JSON} Body request:
 {
-    "id": 1,
+    "customer_id": 10,
     "customer_code": "A0000001",
     "customer_name": "Phạm Tiến Mạnh",
     "customer_phone": "0123456789",
@@ -274,7 +279,7 @@
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String} O.message Thông báo kết quả
 @apiSuccess {Object} O.data Thông tin khách hàng
-@apiSuccess {Number} O.data.id ID khách hàng
+@apiSuccess {Number} O.data.customer_id ID khách hàng
 @apiSuccess {String} O.data.customer_code Mã khách hàng
 @apiSuccess {String} O.data.customer_name Tên khách hàng
 @apiSuccess {String} O.data.customer_phone Số điện thoại
@@ -300,7 +305,7 @@
     "code": 200,
     "message": "Cập nhật thông tin thành công!",
     "data": {
-        "id": 1,
+        "customer_id": 1,
         "customer_code": "A0000001",
         "customer_name": "Phạm Tiến Mạnh",
         "customer_phone": "0123456789",
@@ -344,7 +349,7 @@
 """
 
 """
-@api {patch} /customers/actions/changepassword Đổi mật khẩu
+@api {post} /customers/actions/change-password Đổi mật khẩu
 @apiName Đổi_mật_khẩu
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -361,7 +366,7 @@
 }
 
 
-@apiParam (Body) {Number} id ID khách hàng
+@apiParam (Body) {Number} customer_id ID khách hàng
 @apiParam (Body) {String} customer_code Mã khách hàng
 @apiParam (Body) {String} customer_phone Số điện thoại
 @apiParam (Body) {String} password Mật khẩu hiện tại
@@ -369,7 +374,7 @@
 
 @apiParamExample  {JSON} Body request:
 {
-    "id": 1,
+    "customer_id": 10,
     "customer_code": "A0000001",
     "customer_phone": "0123456789",
     "password": "a1b2c3A@",
@@ -422,7 +427,7 @@
 
 
 """
-@api {post} /customers/<customer_id>/voucher Đặt mua phiếu mua hàng điện tử
+@api {post} /customers/<customer_id>/vouchers Đặt mua phiếu mua hàng điện tử
 @apiName Mua_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -444,8 +449,8 @@
 @apiParam {Number} voucher_id ID voucher
 @apiParam {Number} quantity Số lượng
 
-@apiParamExample  {JSON} URL request:
-{host}/api/v1.0/customers/10/voucher?voucher_id=1&quantity=2
+@apiParamExample URL request:
+{host}/api/v1.0/customers/10/vouchers?voucher_id=1&quantity=2
 
 
 @apiSuccess {Number} O.code Mã trạng thái HTTP
@@ -494,7 +499,7 @@
 
 
 """
-@api {get} /customers/<customer_id>/voucher Xem phiếu mua hàng đang sở hữu
+@api {get} /customers/<customer_id>/vouchers Xem phiếu mua hàng đang sở hữu
 @apiName Xem_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -510,25 +515,28 @@
 
 
 @apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=end_time} sort=+end_time <mark>Sắp xếp dữ liệu</mark>
+
+@apiParam {String=end_time,value} sort=-end_time <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
 <ul>
-    <li><code>+:</code> Tăng dần</li>
-    <li><code>-:</code> Giảm dần</li>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
 </ul>
 
 @apiParamExample URL request:
-{host}/api/v1.0/customers/10/voucher?sort=+end_time
+{host}/api/v1.0/customers/10/vouchers?sort=-end_time
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object[]}  O.data Danh sách thông tin voucher
-@apiSuccess {Number}    O.data.id ID voucher <code>(Thuộc bảng CustomerVoucher)</code>
+@apiSuccess {Number}    O.data.voucher_id ID voucher
 @apiSuccess {String}    O.data.voucher_code Mã voucher
 @apiSuccess {String}    O.data.voucher_name Tên voucher
 @apiSuccess {String}    O.data.content Nội dung
-@apiSuccess {Date}      O.data.end_time Thời hạn voucher <code>(Thuộc bảng CustomerVoucher)</code>
+@apiSuccess {Date}      O.data.end_time Thời hạn voucher của khách hàng
+@apiSuccess {Number}    O.data.value Giá trị của voucher
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -536,18 +544,20 @@
     "message": "Lấy thông tin phiếu mua hàng thành công!",
     "data": [
         {
-            "id": 1,
+            "voucher_id": 1,
             "voucher_code": "PHM1000K",
             "voucher_name": "Phiếu mua hàng 1 triệu",
             "content": "Phiếu mua hàng trị  giá 1.000.000đ",
-            "end_time": "31/12/2022"
+            "end_time": "31/12/2021",
+            "value": 1000000
         },
         {
-            "id": 2,
+            "voucher_id": 2,
             "voucher_code": "PHM2000K",
             "voucher_name": "Phiếu mua hàng 2 triệu",
             "content": "Phiếu mua hàng trị  giá 2.000.000đ"
             "end_time": "31/12/2022"
+            "value": 2000000
         }
     ]
 }
@@ -587,7 +597,7 @@
 
 
 """
-@api {get} /customers/<customer_id>/historysearch Lịch sử tìm kiếm sản phẩm
+@api {get} /customers/<customer_id>/history-searchs Lịch sử tìm kiếm sản phẩm
 @apiName Lịch_sử_tìm_kiếm
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -595,22 +605,23 @@
 
 
 @apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
-@apiParam {String=search_string,search_number,searched_at} sort=-searched_at <mark>Sắp xếp dữ liệu</mark>
+
+@apiParam {String=search_string,search_number,searched_at} sort=-searched_at <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
 <ul>
-    <li><code>+:</code> Tăng dần</li>
-    <li><code>-:</code> Giảm dần</li>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
 </ul>
 @apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
 
 @apiParamExample URL request:
-{host}/api/v1.0/customer/10/historysearch?sort=-searched_at&top=4
+{host}/api/v1.0/customer/10/history-searchs?sort=-searched_at&top=4
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
 @apiSuccess {Object[]}  O.data Danh sách thông tin chuỗi tìm kiếm
-@apiSuccess {Number}    O.data.id ID chuỗi tìm kiếm
 @apiSuccess {String}    O.data.search_string Chuỗi tìm kiếm
 @apiSuccess {String}    O.data.search_number Số lần tìm kiếm
 @apiSuccess {Date}      O.data.searched_at Thời điểm tìm kiếm gần nhất
@@ -621,28 +632,428 @@
     "message": "Lấy thông tin lịch sử tìm kiếm sản phẩm thành công!",
     "data": [
         {
-            "id": 1,
             "search_string": "thit ga",
             "search_number": 10,
             "searched_at": "01/06/2021"
         },
         {
-            "id": 2,
             "search_string": "trung",
             "search_number": 30,
             "searched_at": "01/06/2021"
         },
         {
-            "id": 3,
             "search_string": "pepsi",
             "search_number": 15,
             "searched_at": "01/06/2021"
         },
         {
-            "id": 1,
             "search_string": "banh keo",
             "search_number": 10,
             "searched_at": "01/06/2021"
+        }
+    ]
+}
+
+@apiError 400-BadRequest Không thể xử lý yêu cầu.
+<ul>
+    <li><code>code:</code> 400</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 404-NotFound Không tìm thấy dữ liệu.
+<ul>
+    <li><code>code:</code> 404</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 400:
+{
+    "code": 400,
+    "message": "Sai định dạng URL!"
+}
+@apiErrorExample {JSON} Error 404:
+{
+    "code": 404,
+    "message": "Không tìm thấy dữ liệu!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi lấy lịch sử tìm kiếm: Mô tả lỗi."
+}
+"""
+
+"""
+@api {get} /customers/<customer_id>/history-views Lấy danh sách sản phẩm khách hàng đã xem
+@apiName Sản_phẩm_đã_xem
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Lấy danh sách sản phẩm khách hàng đã xem
+
+
+@apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
+
+@apiParam {String=view_number,view_at} sort=-view_at <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
+<ul>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
+</ul>
+@apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
+
+
+@apiParamExample URL request:
+{host}/api/v1.0/customers/10/history-views?sort=-view_at&top=4
+
+
+@apiSuccess {String}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin sản phẩm
+@apiSuccess {Number}    O.data.product_id ID sản phẩm
+@apiSuccess {String}    O.data.product_code Mã sản phẩm
+@apiSuccess {String}    O.data.product_name Tên sản phẩm
+@apiSuccess {String}    O.data.thumbnail_link Ảnh đại diện sản phẩm
+@apiSuccess {Number}    O.data.price Giá gốc của sản phẩm
+@apiSuccess {String}    O.data.unit Đơn vị của sản phẩm
+@apiSuccess {String}    O.data.unit_child Đơn vị con của sản phẩm
+@apiSuccess {Number}    O.data.quantity Số lượng của sản phẩm
+@apiSuccess {Number}    O.data.quantity_child Số lượng con của sản phẩm
+@apiSuccess {Date}      O.data.expired_at Ngày hết hạn
+@apiSuccess {Number}    O.data.guarantee Bảo hành
+@apiSuccess {Number}    O.data.quantity_sold Số lượng đã bán
+@apiSuccess {Number}    O.data.views Số lượt xem
+@apiSuccess {Number}    O.data.max_buy_number Số lượng mua tối đa
+@apiSuccess {Number}    O.data.sale_price Giá bán khuyễn mãi
+@apiSuccess {Number}    O.data.sale_percent Phần trăm khuyến mãi
+@apiSuccess {Number}    O.data.hot Sản phẩm hot
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Number}    O.data.new Sản phẩm mới
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Number}    O.data.special Sản phẩm đặc biệt
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Object}    O.data.promotion Thông tin khuyến mãi của sản phẩm
+@apiSuccess {Number}    O.data.promotion.promotion_id ID khuyến mãi
+@apiSuccess {String}    O.data.promotion.promotion_code Mã khuyến mãi
+@apiSuccess {String}    O.data.promotion.promotion_name Tên khuyến mãi
+@apiSuccess {String}    O.data.promotion.content Nội dung khuyến mãi
+@apiSuccess {String}    O.data.promotion.image_link Ảnh khuyến mãi
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Lấy danh sách sản phẩm khách hàng đã xem thành công!",
+    "data": [
+        {
+            "product_id": 1,
+            "product_code": "SP0001"
+            "product_name": "Sản phẩm 1"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Chai",
+            "quantity": 9999,
+            "quantity_child": 24,
+            "expired_at": "01/01/2023",
+            "guarantee": 6,
+            "quantity_sold": 9999,
+            "views": 10000,
+            "max_buy_number": 50,
+            "sale_price": 15000,
+            "sale_percent": 50,
+            "hot": 0,
+            "new": 0,
+            "promotion": {
+                "promotion_id": 1,
+                "promotion_code": "KM00050",
+                "promotion_name": "Khuyến mãi",
+                "content": "Khuyến mãi tất cả sản phẩm ngày hôm nay",
+                "image_link": "image.jpg"
+            }
+        },
+        {
+            "product_id": 2,
+            "product_code": "SP0002"
+            "product_name": "Sản phẩm 2"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Gói",
+            "quantity": 9999,
+            "quantity_child": 30,
+            "expired_at": "01/01/2023",
+            "guarantee": 3,
+            "quantity_sold": 8798,
+            "views": 454,
+            "max_buy_number": 50,
+            "sale_price": 0,
+            "sale_percent": 0,
+            "hot": 0,
+            "new": 0,
+            "promotion": null
+        },
+        {
+            "product_id": 3,
+            "product_code": "SP0003"
+            "product_name": "Sản phẩm 3"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Hộp",
+            "quantity": 9999,
+            "quantity_child": 10,
+            "expired_at": "01/01/2023",
+            "guarantee": 8,
+            "quantity_sold": 564,
+            "views": 5456,
+            "max_buy_number": 50,
+            "sale_price": 15000,
+            "sale_percent": 50,
+            "hot": 0,
+            "new": 0,
+            "promotion": {
+                "promotion_id": 1,
+                "promotion_code": "KM00010",
+                "promotion_name": "Khuyến mãi 10",
+                "content": "Khuyến mãi tất cả sản phẩm sữa",
+                "image_link": "image.jpg"
+            }
+        },
+        {
+            "product_id": 4,
+            "product_code": "SP0004"
+            "product_name": "Sản phẩm 4"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Lốc",
+            "unit_child": "Chai",
+            "quantity": 9999,
+            "quantity_child": 6,
+            "expired_at": "01/01/2023",
+            "guarantee": 12,
+            "quantity_sold": 67,
+            "views": 6767,
+            "max_buy_number": 50,
+            "sale_price": 0,
+            "sale_percent": 0,
+            "hot": 0,
+            "new": 0
+            "promotion": null
+        }
+    ]
+}
+
+@apiError 400-BadRequest Không thể xử lý yêu cầu.
+<ul>
+    <li><code>code:</code> 400</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 404-NotFound Không tìm thấy dữ liệu.
+<ul>
+    <li><code>code:</code> 404</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 400:
+{
+    "code": 400,
+    "message": "Sai định dạng URL!"
+}
+@apiErrorExample {JSON} Error 404:
+{
+    "code": 404,
+    "message": "Không tìm thấy dữ liệu!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi lấy lịch sử tìm kiếm: Mô tả lỗi."
+}
+"""
+
+"""
+@api {get} /customers/<customer_id>/history-buys Lấy danh sách sản phẩm khách hàng đã mua
+@apiName Sản_phẩm_đã_mua
+@apiGroup Khách_hàng
+@apiVersion 1.0.0
+@apiDescription Lấy danh sách sản phẩm khách hàng đã mua
+
+
+@apiParam (Path) {Number} customer_id <mark>ID khách hàng</mark>
+
+@apiParam {String=buy_number,buy_at} sort=-buy_at <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
+<ul>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
+</ul>
+@apiParam {Number=≥1} top <mark>Giới hạn số lượng bản ghi
+
+
+@apiParamExample URL request:
+{host}/api/v1.0/customers/10/history-buys?sort=-buy_at&top=4
+
+
+@apiSuccess {String}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin sản phẩm
+@apiSuccess {Number}    O.data.product_id ID sản phẩm
+@apiSuccess {String}    O.data.product_code Mã sản phẩm
+@apiSuccess {String}    O.data.product_name Tên sản phẩm
+@apiSuccess {String}    O.data.thumbnail_link Ảnh đại diện sản phẩm
+@apiSuccess {Number}    O.data.price Giá gốc của sản phẩm
+@apiSuccess {String}    O.data.unit Đơn vị của sản phẩm
+@apiSuccess {String}    O.data.unit_child Đơn vị con của sản phẩm
+@apiSuccess {Number}    O.data.quantity Số lượng của sản phẩm
+@apiSuccess {Number}    O.data.quantity_child Số lượng con của sản phẩm
+@apiSuccess {Date}      O.data.expired_at Ngày hết hạn
+@apiSuccess {Number}    O.data.guarantee Bảo hành
+@apiSuccess {Number}    O.data.quantity_sold Số lượng đã bán
+@apiSuccess {Number}    O.data.views Số lượt xem
+@apiSuccess {Number}    O.data.max_buy_number Số lượng mua tối đa
+@apiSuccess {Number}    O.data.sale_price Giá bán khuyễn mãi
+@apiSuccess {Number}    O.data.sale_percent Phần trăm khuyến mãi
+@apiSuccess {Number}    O.data.hot Sản phẩm hot
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Number}    O.data.new Sản phẩm mới
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Number}    O.data.special Sản phẩm đặc biệt
+<ul>
+    <li><code>0:</code> False</li>
+    <li><code>1:</code> True</li>
+</ul>
+@apiSuccess {Object}    O.data.promotion Thông tin khuyến mãi của sản phẩm
+@apiSuccess {Number}    O.data.promotion.promotion_id ID khuyến mãi
+@apiSuccess {String}    O.data.promotion.promotion_code Mã khuyến mãi
+@apiSuccess {String}    O.data.promotion.promotion_name Tên khuyến mãi
+@apiSuccess {String}    O.data.promotion.content Nội dung khuyến mãi
+@apiSuccess {String}    O.data.promotion.image_link Ảnh khuyến mãi
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Lấy danh sách sản phẩm khách hàng đã mua thành công!",
+    "data": [
+        {
+            "product_id": 1,
+            "product_code": "SP0001"
+            "product_name": "Sản phẩm 1"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Chai",
+            "quantity": 9999,
+            "quantity_child": 24,
+            "expired_at": "01/01/2023",
+            "guarantee": 6,
+            "quantity_sold": 9999,
+            "views": 10000,
+            "max_buy_number": 50,
+            "sale_price": 15000,
+            "sale_percent": 50,
+            "hot": 0,
+            "new": 0,
+            "promotion": {
+                "promotion_id": 1,
+                "promotion_code": "KM00050",
+                "promotion_name": "Khuyến mãi",
+                "content": "Khuyến mãi tất cả sản phẩm ngày hôm nay",
+                "image_link": "image.jpg"
+            }
+        },
+        {
+            "product_id": 2,
+            "product_code": "SP0002"
+            "product_name": "Sản phẩm 2"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Gói",
+            "quantity": 9999,
+            "quantity_child": 30,
+            "expired_at": "01/01/2023",
+            "guarantee": 3,
+            "quantity_sold": 8798,
+            "views": 454,
+            "max_buy_number": 50,
+            "sale_price": 0,
+            "sale_percent": 0,
+            "hot": 0,
+            "new": 0,
+            "promotion": null
+        },
+        {
+            "product_id": 3,
+            "product_code": "SP0003"
+            "product_name": "Sản phẩm 3"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Thùng",
+            "unit_child": "Hộp",
+            "quantity": 9999,
+            "quantity_child": 10,
+            "expired_at": "01/01/2023",
+            "guarantee": 8,
+            "quantity_sold": 564,
+            "views": 5456,
+            "max_buy_number": 50,
+            "sale_price": 15000,
+            "sale_percent": 50,
+            "hot": 0,
+            "new": 0,
+            "promotion": {
+                "promotion_id": 1,
+                "promotion_code": "KM00010",
+                "promotion_name": "Khuyến mãi 10",
+                "content": "Khuyến mãi tất cả sản phẩm sữa",
+                "image_link": "image.jpg"
+            }
+        },
+        {
+            "product__id": 4,
+            "product_code": "SP0004"
+            "product_name": "Sản phẩm 4"
+            "thumbnail_link": "thumbnail.png"
+            "price": 30000,
+            "unit": "Lốc",
+            "unit_child": "Chai",
+            "quantity": 9999,
+            "quantity_child": 6,
+            "expired_at": "01/01/2023",
+            "guarantee": 12,
+            "quantity_sold": 67,
+            "views": 6767,
+            "max_buy_number": 50,
+            "sale_price": 0,
+            "sale_percent": 0,
+            "hot": 0,
+            "new": 0
+            "promotion": null
         }
     ]
 }
