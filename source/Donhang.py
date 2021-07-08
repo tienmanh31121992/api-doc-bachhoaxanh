@@ -1,5 +1,5 @@
 """
-   @api {post} /bill/actions/add-bill Xác nhận đơn hàng (Thêm đơn hàng)
+   @api {post} /bills/<customer_id> Thêm đơn hàng
    @apiName Tạo_đơn_hàng
    @apiGroup Đơn_hàng
    @apiVersion  1.0.0
@@ -14,7 +14,7 @@
        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
    }
 
-   @apiParam (Body) {Number} customer.id id khách hàng
+
    @apiParam (Body) {String} receiver_name tên người nhận
    @apiParam (Body) {String} receiver_phone số điện thoại người nhận
    @apiParam (Body) {String} receiver_address địa chỉ nhận
@@ -36,16 +36,14 @@
         <li><code>4:</code> đã nhận hàng</li>
     </ul>
    @apiParam (Body) {Number} voucher_id id phiếu mua hàng
-   @apiParam (Body) {String} product.id id sản phẩm
-   @apiParam (Body) {Number} product.quantity số lượng mua
-   @apiParam (Body) {Number} product.price giá sản phẩm
+   @apiParam (Body) {String} product_id id sản phẩm
+   @apiParam (Body) {Number} quantity số lượng mua
+   @apiParam (Body) {Number} price giá sản phẩm
 
-   @apiParamExample {JSON} JSON - Body request:
+   @apiParamExample {JSON} Cách gọi URL:
+   {host}/api/v1.0/bills/1
+   @apiParamExample {JSON} Body request:
     {
-        "customer": {
-            "id": 1
-        },
-        "bill": {
            "receiver_name": "Phạm Tiến Mạnh",
            "receiver_phone": "0973456233",
            "receiver_address": "Số 8, ngách 141",
@@ -62,17 +60,16 @@
            "voucher_id": 1,
            "product": [
               {
-                  "id": 1,
+                  "product_id": 1,
                   "quantity": 3,
                   "price": 32000
               },
               {
-                  "id": 2,
+                  "product_id": 2,
                   "quantity": 4,
                   "price": 40000
               }
            ]
-        }
     }
 
     @apiSuccess {String} code Mã trạng thái HTTP
@@ -108,7 +105,7 @@
     }
 """
 """
-   @api {delete} /bill/actions/cancel-bill Hủy đơn hàng
+   @api {delete} /bills/<bill_id> Hủy đơn hàng
    @apiName Hủy_đơn_hàng
    @apiGroup Đơn_hàng
    @apiVersion  1.0.0
@@ -117,36 +114,20 @@
    @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
    @apiHeaderExample  {JSON} Header mẫu:
    {   
-       "Content-Type": "application/json",
        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
    }
 
-   @apiParam {Number} bill.id id đơn hàng
-   
-   @apiParamExample  {JSON} Cách truyền parameter:
-   {host}/api/v1.0/bill/cancel-bill?id=1
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/bills/1
 
     @apiSuccess {String} Object.code Mã trạng thái HTTP
     <br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark><br>
     @apiSuccess {String} Object.message Thông báo kết quả
-    @apiSuccess {Object} Object.data Đối tượng trả về
-    @apiSuccess {Object} Object.data.bill Đối tượng đơn hàng
-    @apiSuccess {Number} Object.data.bill.status Trạng thái đơn hàng
-    <ul>
-        <li><code>0:</code> đã hủy</li>
-        <li><code>1:</code> chờ xác nhận</li>
-        <li><code>2:</code> đang xuất hàng</li>
-        <li><code>3:</code> đang giao hàng</li>
-        <li><code>4:</code> đã nhận hàng</li>
-    </ul>
 
     @apiSuccessExample {JSON} Success 200:
     {
         "code": 200,
         "message": "Hủy đơn hàng thành công!"
-        "data": {
-           "bill": { "status": 0 }      
-        }
     }
 
    @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
@@ -182,7 +163,7 @@
     }
 """
 """
-   @api {get} /bill/actions/get-bills Lịch sử mua hàng
+   @api {get} /bills/<customer_id> Lịch sử mua hàng
    @apiName lịch_sử_mua_hàng
    @apiGroup Đơn_hàng
    @apiVersion  1.0.0
@@ -191,32 +172,30 @@
    @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
    @apiHeaderExample  {JSON} Header mẫu:
    {   
-       "Content-Type": "application/json",
        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
    }
    
-   
-   @apiParam {Number} customer.id id khách hàng
-   
-   @apiParamExample  {JSON} Body request:
-   {host}/api/v.1.0/bill/actions/get-bills?id=1
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v.1.0/bills/1
 
     @apiSuccess {String} Object.code Mã trạng thái HTTP
     <br><mark>200-OK: Yêu cầu được tiếp nhận và xử lý thành công</mark><br>
     @apiSuccess {String} Object.message Thông báo kết quả
-    @apiSuccess {Object[]} Object.list_bill Đối tượng danh sách đơn hàng
-    @apiSuccess {String} Object.list_bill.receiver_name người nhận hàng
-    @apiSuccess {String} Object.list_bill.receiver_phone số điện thoại người nhận
-    @apiSuccess {Number} Object.list_bill.province_id mã tỉnh, thành phố
-    @apiSuccess {Number} Object.list_bill.district_id mã quận, huyện
-    @apiSuccess {Number} Object.list_bill.block_id mã phường, xã
-    @apiSuccess {String} Object.list_bill.appointment_date ngày hẹn giao hàng
-    @apiSuccess {String} Object.list_bill.finished_at ngày hoàn thành đơn hàng
-    @apiSuccess {String} Object.list_bill.delivery_note chú thích về giao hàng
-    @apiSuccess {String} Object.list_bill.bill_note chú thích riêng của khách hàng
-    @apiSuccess {Number} Object.list_bill.delivery_fee phí giao hàng thực tế
-    @apiSuccess {Number} Object.list_bill.total_price tổng tiền của đơn hàng
-    @apiSuccess {Number} Object.list_bill.status Trạng thái đơn hàng
+    @apiSuccess {Object} Object.data Kết quả trả về
+    @apiSuccess {String} Object.data.customer_name Tên khách hàng
+    @apiSuccess {Object[]} Object.data.bills Đối tượng danh sách đơn hàng
+    @apiSuccess {String} Object.data.bills.receiver_name người nhận hàng
+    @apiSuccess {String} Object.data.bills.receiver_phone số điện thoại người nhận
+    @apiSuccess {Number} Object.data.bills.province_id mã tỉnh, thành phố
+    @apiSuccess {Number} Object.data.bills.district_id mã quận, huyện
+    @apiSuccess {Number} Object.data.bills.block_id mã phường, xã
+    @apiSuccess {String} Object.data.bills.appointment_date ngày hẹn giao hàng
+    @apiSuccess {String} Object.data.bills.finished_at ngày hoàn thành đơn hàng
+    @apiSuccess {String} Object.data.bills.delivery_note chú thích về giao hàng
+    @apiSuccess {String} Object.data.bills.bill_note chú thích riêng của khách hàng
+    @apiSuccess {Number} Object.data.bills.delivery_fee phí giao hàng thực tế
+    @apiSuccess {Number} Object.data.bills.total_price tổng tiền của đơn hàng
+    @apiSuccess {Number} Object.data.bills.status Trạng thái đơn hàng
     <ul>
         <li><code>0:</code> đã hủy</li>
         <li><code>1:</code> chờ xác nhận</li>
@@ -224,11 +203,11 @@
         <li><code>3:</code> đang giao hàng</li>
         <li><code>4:</code> đã nhận hàng</li>
     </ul>
-    @apiSuccess {Object[]} Object.list_bill.product Đối tượng sản phẩm
-    @apiSuccess {Object} Object.list_bill.product.product_name tên sản phẩm
-    @apiSuccess {Object} Object.list_bill.product.quantity mua với số lượng
-    @apiSuccess {Object} Object.list_bill.product.expired_at ngày hết hạn
-    @apiSuccess {Object} Object.list_bill.product.price giá sản phẩm    
+    @apiSuccess {Object[]} Object.data.bills.product Đối tượng sản phẩm
+    @apiSuccess {String} Object.data.bills.product.product_name tên sản phẩm
+    @apiSuccess {Number} Object.data.bills.product.quantity mua với số lượng
+    @apiSuccess {String} Object.data.bills.product.expired_at ngày hết hạn
+    @apiSuccess {Number} Object.data.bills.product.price giá sản phẩm    
     
     @apiSuccessExample {JSON} Success 200:
     {
@@ -236,7 +215,7 @@
         "message": "Lấy danh sách đơn hàng thành công!",
         "data": {
             "customer_name": "Nguyễn Hoàng Sơn",
-            "list_bill": [
+            "bills": [
                   { 
                       "receiver_name": "Đinh Văn Hiệp",
                       "receiver_phone": "0368498298",
