@@ -91,11 +91,11 @@
     }
 """
 """
-   @api {post} /cart/actions/add-cart Thêm giỏ hàng
+   @api {post} /cart Thêm giỏ hàng
    @apiName Thêm_giỏ_hàng
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
-   @apiDescription Khách hàng thêm sản phẩm, giỏ hàng được thêm vào DB
+   @apiDescription Khách hàng chưa có giỏ hàng, lúc này thêm sản phẩm sẽ tạo giỏ hàng mới trong DB
    
    @apiHeader {String} Content-Type <mark>application/json</mark>
 
@@ -110,8 +110,8 @@
    
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
-   @apiSuccess {Object[]} Object.data Đối tượng trả về
-   @apiSuccess {Object[]} Object.data.product Đối tượng sản phẩm
+   @apiSuccess {Object} Object.data Đối tượng trả về
+   @apiSuccess {Object} Object.data.product Đối tượng sản phẩm
    @apiSuccess {String} Object.data.product.product_name Đối tượng sản phẩm
    @apiSuccess {String} Object.data.product.thumbnail_link ảnh sản phẩm
    
@@ -152,6 +152,11 @@
         "code": 412,
         "message": "Hàng đang tạm hết!"
     }
+    @apiErrorExample {JSON} Error 412:
+    {
+        "code": 412,
+        "message": "Vượt quá số lượng được phép mua!"
+    }
     @apiErrorExample {JSON} Error 500:
     {
         "code": 500,
@@ -159,21 +164,21 @@
     }
 """
 """
-   @api {post} /cart/actions/add-item Thêm sản phẩm
-   @apiName Thêm_sản_phẩm
+   @api {patch} /cart/<cart_id> Thêm/ cập nhật sản phẩm
+   @apiName Thêm_cập_nhật_sản_phẩm
    @apiGroup Giỏ_hàng
    @apiVersion  1.0.0
-   @apiDescription Khách hàng thêm sản phẩm vào giỏ hàng
+   @apiDescription Khách hàng thêm/cập nhật sản phẩm vào giỏ hàng
 
    @apiHeader {String} Content-Type <mark>application/json</mark>
 
-   @apiParam  {Number} cart_id id giỏ hàng
-   @apiParam  {Number} product_id id Sản phẩm
-   @apiParam  {Number} quantity số lượng mua
+   @apiParam (Body) {Number} product_id id Sản phẩm
+   @apiParam (Body) {Number} quantity số lượng mua
    
+   @apiParamExample {JSON} Cách gọi URL:
+   {host}/api/v1.0/cart/1
    @apiParamExample  {JSON} Body request:
    {
-       "cart_id": 1,
        "product_id": 2,
        "quantity": 1
    }
@@ -188,18 +193,10 @@
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Thêm sản phẩm vào giỏ hàng thành công",
+       "message": "Thêm/cập nhật sản phẩm vào giỏ hàng thành công",
        "data": {
-           "product": [
-              {
-                 "product_name": "Thịt ba chỉ bò Úc Pacow khay",
-                 "thumbnail_link": "product1.png"
-              },
-              {
-                 "product_name": "Hộp phô mai que 300g",
-                 "thumbnail_link": "product2.png"
-              }
-           ]      
+             "product_name": "Thịt ba chỉ bò Úc Pacow khay",
+             "thumbnail_link": "product1.png"      
        }
    }
    
@@ -228,6 +225,11 @@
     {
         "code": 412,
         "message": "Hàng đang tạm hết!"
+    }
+    @apiErrorExample {JSON} Error 412:
+    {
+        "code": 412,
+        "message": "Vượt quá số lượng được phép mua!"
     }
     @apiErrorExample {JSON} Error 500:
     {
@@ -276,73 +278,6 @@
     {
         "code": 500,
         "message": "Xóa sản phẩm thất bại!"
-    }
-"""
-
-"""
-   @api {patch} /cart/<cart_id> Cập nhật số lượng của một sản phẩm
-   @apiName Cập_nhật_số_lượng
-   @apiGroup Giỏ_hàng
-   @apiVersion  1.0.0
-   @apiDescription Khách hàng thay đổi số lượng một sản phẩm
-   
-   @apiHeader {String} Content-Type <mark>application/json</mark>
-
-   @apiParam  {Number} product_id id sản phẩm
-   @apiParam  {Number} quantity số lượng mua
-   
-   @apiParamExample  {JSON} Cách gọi URL:
-   {host}/api/v1.0/cart/1
-   @apiParamExample  {JSON} Body Request:
-   { 
-       "product_id": 1,
-       "quantity": 2
-   }
-   
-   @apiSuccess {String} code Mã trạng thái HTTP
-   @apiSuccess {String} message Thông báo kết quả
-   
-   @apiSuccessExample {JSON} Success 200:
-   {
-       "code": 200,
-       "message": "Cập nhật số lượng thành công!" 
-   }    
-   
-   @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
-    <ul>
-        <li><code>code:</code> 400</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-   @apiError (Error 4xx) 412-PreconditionFailed Lỗi kiểm tra điều kiện
-    <ul>
-        <li><code>code:</code> 412</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-    @apiError (Error 5xx) 500-InternalServerError Lỗi Server
-    <ul>
-        <li><code>code:</code> 500</li>
-        <li><code>message:</code> Thông báo lỗi</li>
-    </ul>
-
-    @apiErrorExample {JSON} Error 400:
-    {
-        "code": 400,
-        "message": "Yêu cầu không hợp lệ!"
-    }
-    @apiErrorExample {JSON} Error 412:
-    {
-        "code": 412,
-        "message": "Sản phẩm không còn đủ số lượng!"
-    }
-    @apiErrorExample {JSON} Error 412:
-    {
-        "code": 412,
-        "message": "Vượt quá số lượng được cho phép mua!"
-    }
-    @apiErrorExample {JSON} Error 500:
-    {
-        "code": 500,
-        "message": "Xảy ra lỗi khi cập nhật số lượng!"
     }
 """
 """
