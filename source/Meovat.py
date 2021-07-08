@@ -1,21 +1,22 @@
 """
-   @api {get} /articles Lấy danh sách bài viết theo nhóm bài viết
+   @api {get} /articles/<article_group_id> Lấy danh sách bài viết theo nhóm bài viết
    @apiName Lấy_danh_sách_bài_viết_theo_nhóm
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
    @apiDescription Hiển thị danh sách các bài viết (mẹo vặt) theo nhóm bài viết
 
-   @apiParam {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
-   @apiParam {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
-   @apiParam {String} article_group.id id nhóm bài viết
-   @apiParam {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
-   @apiParam {Number} per_page số lượng phần tử trong 1 trang
+   @apiParam (Body) {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
+   @apiParam (Body) {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
+   @apiParam (Body) {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
+   @apiParam (Body) {Number} per_page số lượng phần tử trong 1 trang
+
+   @apiParamExample {JSON} cách gọi URL:
+   {host}/api/v1.0/articles/1
 
    @apiParamExample {JSON} Body Request:
    {
        "sort_by": "date_created",
        "sort_type": "desc",
-       "id": 1,
        "page": 0,
        "per_page": 10
    }
@@ -89,23 +90,23 @@
     }
 """
 """
-   @api {get} /articles Lấy danh sách bài viết theo tag
+   @api {get} /articles/<tag_id> Lấy danh sách bài viết theo tag
    @apiName Lấy_danh_sách_bài_viết_theo_tag
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
    @apiDescription Hiển thị danh sách các bài viết (mẹo vặt) theo tag
 
-   @apiParam {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
-   @apiParam {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
-   @apiParam {String} tag.id id tag bài viết
-   @apiParam {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
-   @apiParam {Number} per_page số lượng phần tử trong 1 trang
+   @apiParam (Body) {String} sort_by điều kiện sắp xếp <p>(ví dụ sắp xếp theo ngày tạo)</p>
+   @apiParam (Body) {String} sort_type kiểu sắp xếp <p>(Tăng dần hoặc giảm dần)</p>
+   @apiParam (Body) {Number} page thứ tự trang <p>(page=0 là trang đầu tiên, page=1 là trang thứ 2)</p>
+   @apiParam (Body) {Number} per_page số lượng phần tử trong 1 trang
 
+   @apiParamExample {JSON} cách gọi URL:
+   {host}/api/v1.0/articles/1
    @apiParamExample {JSON} Body Request:
    {
        "sort_by": "date_created",
        "sort_type": "desc",
-       "id": 1,
        "page": 0,
        "per_page": 10
    }
@@ -179,16 +180,14 @@
     }
 """
 """
-   @api {get} /articles/view-article Xem bài viết
+   @api {get} /articles/<article_id> Xem bài viết
    @apiName Xem_bài_viết
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
    @apiDescription Khách hàng vào xem bài viết
 
-   @apiParam  {Number} article.id id bài viết
-
-   @apiParamExample  {JSON} Cách truyền parameter:
-   {host}/api/v1.0/articles/view-article?id=1
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/articles/1
    
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
@@ -252,24 +251,33 @@
     }
 """
 """
-   @api {post} /articles/send-article Đăng bài viết
+   @api {post} /articles Đăng bài viết
    @apiName Đăng_bài_viết
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
    @apiDescription Khách hàng đăng bài viết
+   
+   @apiHeader {String} Content-Type <mark>application/json</mark>
+   @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-   @apiParam (Body) {Number} Object.customer_id id khách hàng
-   @apiParam (Body) {Number} Object.title tiêu đề bài viết
-   @apiParam (Body) {Number} Object.content nội dung bài viết
-   @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
-   @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
-        
+
+   @apiHeaderExample  {JSON} Header mẫu:
+   {
+       "Content-Type": "application/json",
+       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+   }
+
+   @apiParam (Body) {String} customer_id id khách hàng
+   @apiParam (Body) {String} title tiêu đề bài viết
+   @apiParam (Body) {String} content nội dung bài viết
+   @apiParam (Body) {String} image_link link ảnh bài viết
+          
    @apiParamExample  {JSON} Body Request:
-   {            
-         "customer_id": 1,
+   {     
+         "customer_id": 1,       
          "title": "Chia sẻ cách bảo quản thịt trong tủ lạnh",
          "content": "Để bảo quản thịt trong tủ lạnh bạn cần phải...",
-         "article_image": [
+         "articleimage": [
                 {
                    "image_link": "image1.png"
                 },
@@ -282,14 +290,13 @@
          ]
    }
    
-   @apiSuccess {Object} Object Kết quả trả về
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
    
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Gửi bài viết thành công!",
+       "message": "Gửi bài viết thành công,đang chờ xét duyệt!",
    }    
 
    @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
@@ -315,44 +322,29 @@
     }  
 """
 """
-   @api {post} /articles/update-article Sửa bài viết
-   @apiName Sửa_bài_viết
+   @api {delete} /articles/<article_id> Xóa bài viết
+   @apiName Xóa_bài_viết
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
-   @apiDescription Khách hàng đăng bài viết
+   @apiDescription Khách hàng xóa bài viết
+   
+   @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-   @apiParam (Body) {Number} Object.article_id id bài viết
-   @apiParam (Body) {Number} Object.title tiêu đề bài viết
-   @apiParam (Body) {Number} Object.content nội dung bài viết
-   @apiParam (Body) {Object[]} Object.article_image Đối tượng ảnh bài viết
-   @apiParam (Body) {String} Object.article_image.image_link Đối tượng ảnh bài viết
-
-   @apiParamExample  {JSON} Body Request:
-   {            
-         "aritcle_id": 1,
-         "title": "Chia sẻ cách bảo quản cá trong tủ lạnh",
-         "content": "Để bảo quản cá trong tủ lạnh bạn cần phải...",
-         "article_image": [
-                {
-                   "image_link": "image1.png"
-                },
-                {
-                   "image_link": "image2.png"
-                },
-                {
-                   "image_link": "image3.png"
-                }
-         ]
+   @apiHeaderExample  {JSON} Header mẫu:
+   {
+       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
    }
 
-   @apiSuccess {Object} Object Kết quả trả về
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/articles/1
+   
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Gửi yêu cầu cập nhật bài viết thành công!",
+       "message": "Xóa bài viết thành công!",
    }    
 
    @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
@@ -374,29 +366,55 @@
     @apiErrorExample {JSON} Error 500:
     {
         "code": 500,
-        "message": "Không thể gửi yêu cầu cập nhật bài viết!"
+        "message": "Không thể xóa bài viết!"
     }  
 """
 """
-   @api {delete} /articles/delete-article Xóa bài viết
-   @apiName Xóa_bài_viết
+   @api {get} /articles/<customer_id> Lấy danh sách bài viết đã đăng
+   @apiName Lấy_danh_sách_bài_viết_đã_đăng
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
-   @apiDescription Khách hàng xóa bài viết
+   @apiDescription Lấy ra danh sách bài viết đã đăng của khách hàng
 
-   @apiParam {Number} article_id id bài viết
+   @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-   @apiParamExample  {JSON} Cách truyền parameter:
-   https://www.bachhoaxanh.com/api/v1/articles/delete-article?article_id=1
-   
-   @apiSuccess {Object} Object Kết quả trả về
+   @apiHeaderExample  {JSON} Header mẫu:
+   {
+       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+   }
+
+   @apiParamExample  {JSON} Cách gọi URL:
+   {host}/api/v1.0/articles/1
+
    @apiSuccess {String} Object.code Mã trạng thái HTTP
    @apiSuccess {String} Object.message Thông báo kết quả
 
    @apiSuccessExample {JSON} Success 200:
    {
        "code": 200,
-       "message": "Xóa bài viết thành công!",
+       "message": "Lấy danh sách thành công!",
+       "data": {
+            "articles": [
+                {
+                    "article_name": "Tên bài viết 1",
+                    "title": "Tiêu đề 1",
+                    "content": "Nội dung 1",
+                    "thumbnail_link": "image1.png"
+                },
+                {
+                    "article_name": "Tên bài viết 2",
+                    "title": "Tiêu đề 2",
+                    "content": "Nội dung 2",
+                    "thumbnail_link": "image2.png"
+                },
+                {
+                    "article_name": "Tên bài viết 3",
+                    "title": "Tiêu đề 3",
+                    "content": "Nội dung 3",
+                    "thumbnail_link": "image3.png"
+                }
+            ]
+       }
    }    
 
    @apiError (Error 4xx) 400-BadRequest Lỗi Request từ phía Client
