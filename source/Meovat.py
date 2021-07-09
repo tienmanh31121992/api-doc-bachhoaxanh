@@ -161,7 +161,7 @@
     }
 """
 """
-   @api {post} /articles Đăng bài viết
+   @api {post} /articles/<customer_id> Đăng bài viết
    @apiName Đăng_bài_viết
    @apiGroup Mẹo_vặt
    @apiVersion  1.0.0
@@ -170,21 +170,20 @@
    @apiHeader {String} Content-Type <mark>application/json</mark>
    @apiHeader {String} Authorization <code>Bearer</code> <mark>Chuỗi Token</mark>
 
-
    @apiHeaderExample  {JSON} Header mẫu:
-   {
+    {
        "Content-Type": "application/json",
        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
-   }
+    }
 
-   @apiParam (Body) {String} customer_id id khách hàng
    @apiParam (Body) {String} title tiêu đề bài viết
    @apiParam (Body) {String} content nội dung bài viết
    @apiParam (Body) {String} image_link link ảnh bài viết
-          
+   
+   @apiParamExample {JSON} Cách gọi URL:
+   {host}/api/v1.0/articles/1       
    @apiParamExample  {JSON} Body Request:
-   {     
-         "customer_id": 1,       
+   {            
          "title": "Chia sẻ cách bảo quản thịt trong tủ lạnh",
          "content": "Để bảo quản thịt trong tủ lạnh bạn cần phải...",
          "articleimage": [
