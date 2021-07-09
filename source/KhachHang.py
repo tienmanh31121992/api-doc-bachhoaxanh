@@ -20,7 +20,7 @@
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
 </ul>
-@apiParam (Body) {String} phone Số điện thoại
+@apiParam (Body) {String} customer_phone Số điện thoại
 @apiParam (Body) {String} password Mật khẩu
 @apiParam (Body) {String} address Địa chỉ khách hàng
 @apiParam (Body) {Date}   [date_of_birth] Ngày sinh
@@ -38,10 +38,10 @@
 {
     "customer_name": "Tiến Mạnh",
     "gender": 1,
-    "phone": "0123456789",
+    "customer_phone": "0123456789",
     "password": "a1b2c3A@",
     "address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-    "date_birth": "31/12/1992",
+    "date_of_birth": "31/12/1992",
     "email": "asdasdasf@gmail.com",
     "avatar_link": "avatar1.jpg",
     "guardian_name": null,
@@ -104,12 +104,12 @@
 }
 
 
-@apiParam (Body) {String} phone Số điện thoại khách hàng
+@apiParam (Body) {String} customer_phone Số điện thoại khách hàng
 @apiParam (Body) {String} password Mật khẩu đăng nhập
 
 @apiParamExample {JSON} Body request:
 {
-    "phone": "0123456789",
+    "customer_phone": "0123456789",
     "password": "a1b2c3A@"
 }
 
@@ -129,7 +129,7 @@
 </ul>
 @apiSuccess {String} O.data.customer_phone Số điện thoại
 @apiSuccess {String} O.data.customer_address Địa chỉ khách hàng
-@apiSuccess {Date}   O.data.date_birth Ngày sinh
+@apiSuccess {Date}   O.data.date_of_birth Ngày sinh
 @apiSuccess {String} O.data.avatar_link Đường dẫn lưu ảnh đại diện
 @apiSuccess {String} O.data.email Địa chỉ thư điện tử
 @apiSuccess {String} O.data.guardian_name Tên người giám hộ
@@ -153,7 +153,7 @@
         "gender": 1,
         "customer_phone": "0123456789",
         "customer_address": "Số 9, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-        "date_birth": "31/12/1992",
+        "date_of_birth": "31/12/1992",
         "email": "asdasdasf@gmail.com",
         "avatar_link": "avatar1.jpg",
         "guardian_name": null,
@@ -211,7 +211,7 @@
 """
 
 """
-@api {patch} /customers/<customer_id> Cập nhật thông tin
+@api {patch} /customers Cập nhật thông tin
 @apiName Cập_nhật_thông_tin
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -228,28 +228,23 @@
 }
 
 
-@apiParam (Path) {Number} customer_id ID khách hàng
-
-@apiParamExample URL request:
-{host}/api/v1.0/customers/10
-
 @apiParam (Body) {Number} customer_id ID khách hàng
 @apiParam (Body) {String} customer_code Mã khách hàng
 @apiParam (Body) {String} customer_name Tên khách hàng
 @apiParam (Body) {String} customer_phone Số điện thoại
 @apiParam (Body) {String} customer_address Địa chỉ khách hàng
-@apiParam (Body) {Date}   date_birth Ngày sinh
-@apiParam (Body) {String} avatar_link Đường dẫn lưu ảnh đại diện
-@apiParam (Body) {String} email Địa chỉ thư điện tử
+@apiParam (Body) {Date}   [date_of_birth] Ngày sinh
+@apiParam (Body) {String} [avatar_link] Đường dẫn lưu ảnh đại diện
+@apiParam (Body) {String} [email] Địa chỉ thư điện tử
 @apiParam (Body) {Number=0,1} gender Giới tính khách hàng
 <ul>
     <li><code>0:</code> Nữ</li>
     <li><code>1:</code> Nam</li>
 </ul>
-@apiParam (Body) {String} guardian_name Tên người giám hộ
-@apiParam (Body) {String} indentity_id Số chứng minh thư, căn cước, hộ chiếu
-@apiParam (Body) {Date}   certify_date Ngày cấp CMT, CCCD, HC
-@apiParam (Body) {String} certify_place Nơi cấp CMT, CCCD, HC
+@apiParam (Body) {String} [guardian_name] Tên người giám hộ
+@apiParam (Body) {String} [indentity_id] Số chứng minh thư, căn cước, hộ chiếu
+@apiParam (Body) {Date}   [certify_date] Ngày cấp CMT, CCCD, HC
+@apiParam (Body) {String} [certify_place] Nơi cấp CMT, CCCD, HC
 @apiParam (Body) {Number} province_id ID tỉnh/thành phố
 @apiParam (Body) {Number} district_id ID quận/huyện
 @apiParam (Body) {Number} block_id ID xã/phường
@@ -261,7 +256,7 @@
     "customer_name": "Phạm Tiến Mạnh",
     "customer_phone": "0123456789",
     "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-    "date_birth": "31/12/1992",
+    "date_of_birth": "31/12/1992",
     "avatar_link": "avatar1.jpg",
     "email": "asdasdasf@gmail.com",
     "gender": 1,
@@ -284,7 +279,7 @@
 @apiSuccess {String} O.data.customer_name Tên khách hàng
 @apiSuccess {String} O.data.customer_phone Số điện thoại
 @apiSuccess {String} O.data.customer_address Địa chỉ khách hàng
-@apiSuccess {Date}   O.data.date_birth Ngày sinh
+@apiSuccess {Date}   O.data.date_of_birth Ngày sinh
 @apiSuccess {String} O.data.avatar_link Đường dẫn lưu ảnh đại diện
 @apiSuccess {String} O.data.email Địa chỉ thư điện tử
 @apiSuccess {Number} O.data.gender Giới tính khách hàng
@@ -310,7 +305,7 @@
         "customer_name": "Phạm Tiến Mạnh",
         "customer_phone": "0123456789",
         "customer_address": "Số 11, ngõ 11 đường Cầu Diễn, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội",
-        "date_birth": "31/12/1992",
+        "date_of_birth": "31/12/1992",
         "avatar_link": "avatar2.jpg",
         "email": "asdasdasf@gmail.com",
         "gender": 1,
@@ -427,7 +422,7 @@
 
 
 """
-@api {post} /customers/<customer_id>/vouchers Đặt mua phiếu mua hàng điện tử
+@api {post} /customers/actions/order-giftcards Đặt mua phiếu mua hàng
 @apiName Mua_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -444,13 +439,18 @@
 }
 
 
-@apiParam (Path) {Number} customer_id ID khách hàng
+@apiParam (Body) {Number} customer_id ID khách hàng
+@apiParam (Body) {Number} gift_card_id ID phiếu mua hàng
+@apiParam (Body) {Number} phone Số điện thoại nhận mã sử dụng phiếu mua hàng
+@apiParam (Body) {Number} quantity Số lượng
 
-@apiParam {Number} voucher_id ID voucher
-@apiParam {Number} quantity Số lượng
-
-@apiParamExample URL request:
-{host}/api/v1.0/customers/10/vouchers?voucher_id=1&quantity=2
+@apiParamExample Body request:
+{
+    "customer_id": 10,
+    "gift_card_id": 1,
+    "customer_phone": "0123456789",
+    "quantity": 2
+}
 
 
 @apiSuccess {Number} O.code Mã trạng thái HTTP
@@ -460,7 +460,7 @@
 @apiSuccessExample {JSON} Success 200:
 {
     "code": 200,
-    "message": "Đặt mua phiếu mua hàng điện tử thành công!"
+    "message": "Đặt mua phiếu mua hàng thành công!"
 }
 
 
@@ -499,7 +499,7 @@
 
 
 """
-@api {get} /customers/<customer_id>/vouchers Xem phiếu mua hàng đang sở hữu
+@api {get} /customers/<customer_id>/giftcards Xem phiếu mua hàng đang sở hữu
 @apiName Xem_phiếu_mua_hàng
 @apiGroup Khách_hàng
 @apiVersion 1.0.0
@@ -524,19 +524,17 @@
 </ul>
 
 @apiParamExample URL request:
-{host}/api/v1.0/customers/10/vouchers?sort=-end_time
+{host}/api/v1.0/customers/10/giftcards?sort=-end_time
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
 <br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
 @apiSuccess {String}    O.message Thông báo kết quả
-@apiSuccess {Object[]}  O.data Danh sách thông tin voucher
-@apiSuccess {Number}    O.data.voucher_id ID voucher
-@apiSuccess {String}    O.data.voucher_code Mã voucher
-@apiSuccess {String}    O.data.voucher_name Tên voucher
-@apiSuccess {String}    O.data.content Nội dung
-@apiSuccess {Date}      O.data.end_time Thời hạn voucher của khách hàng
-@apiSuccess {Number}    O.data.value Giá trị của voucher
+@apiSuccess {Object[]}  O.data Danh sách thông tin phiếu mua hàng
+@apiSuccess {Number}    O.data.gift_card_id ID phiếu mua hàng khách hàng đang sở hữu
+@apiSuccess {String}    O.data.gift_card_code Mã sử dụng của phiếu mua hàng
+@apiSuccess {Date}      O.data.end_time Thời hạn phiếu mua hàng của khách hàng
+@apiSuccess {Number}    O.data.value Giá trị của phiếu mua hàng
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -544,18 +542,20 @@
     "message": "Lấy thông tin phiếu mua hàng thành công!",
     "data": [
         {
-            "voucher_id": 1,
-            "voucher_code": "PHM1000K",
-            "voucher_name": "Phiếu mua hàng 1 triệu",
-            "content": "Phiếu mua hàng trị  giá 1.000.000đ",
+            "gift_card_id": 1,
+            "gift_card_code": "PHM1000K-0626565",
             "end_time": "31/12/2021",
             "value": 1000000
         },
         {
-            "voucher_id": 2,
-            "voucher_code": "PHM2000K",
-            "voucher_name": "Phiếu mua hàng 2 triệu",
-            "content": "Phiếu mua hàng trị  giá 2.000.000đ"
+            "gift_card_id": 1,
+            "gift_card_code": "PHM1000K-56464564",
+            "end_time": "31/12/2021",
+            "value": 1000000
+        },
+        {
+            "gift_card_id": 2,
+            "gift_card_code": "PHM2000K-6546464565",
             "end_time": "31/12/2022"
             "value": 2000000
         }

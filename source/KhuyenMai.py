@@ -111,3 +111,79 @@
     "message": "Xảy ra lỗi khi lấy thông tin khuyễn mãi: Mô tả lỗi."
 }
 """
+
+"""
+@api {get} /promotions/actions/count-products Lấy tổng sản phẩm khuyến mãi
+@apiName Lấy_tổng_khuyến_mãi
+@apiGroup Khuyến_mãi
+@apiVersion 1.0.0
+@apiDescription Lấy tổng sản phẩm đang được khuyến mãi
+
+
+@apiParam {Number} [product_group_id] <mark>ID nhóm sản phẩm
+<br><code>-1:</code> Tính tổng toàn bộ sản phẩm khuyến mãi</mark>
+
+@apiParamExample  URL request:
+{host}/api/v1.0/promotions/actions/count-products?product_group_id=1,2,3
+
+
+@apiSuccess {Number}    O.code Mã trạng thái HTTP
+<br><mark><code>200:</code> Yêu cầu được tiếp nhận và xử lý thành công</mark>
+@apiSuccess {String}    O.message Thông báo kết quả
+@apiSuccess {Object[]}  O.data Danh sách thông tin khuyến mãi
+@apiSuccess {Number}    O.data.product_group_id ID nhóm sản phẩm
+@apiSuccess {Number}    O.data.total_product Tổng số sản phẩm
+
+@apiSuccessExample {JSON} Success 200:
+{
+    "code": 200,
+    "message": "Lấy tổng sản phẩm khuyến mãi thành công!",
+    "data": [
+        {
+            "product_group_id": 1,
+            "total_products": 40
+        },
+        {
+            "product_group_id": 2,
+            "total_products": 50
+        },
+        {
+            "product_group_id": 3,
+            "total_products": 17
+        }
+    ]
+}
+
+
+@apiError 400-BadRequest Không thể xử lý yêu cầu.
+<ul>
+    <li><code>code:</code> 400</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError 404-NotFound Không tìm thấy dữ liệu.
+<ul>
+    <li><code>code:</code> 404</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+@apiError (Error 5xx) 500-InternalServerError Lỗi Server
+<ul>
+    <li><code>code:</code> 500</li>
+    <li><code>message:</code> Thông báo lỗi</li>
+</ul>
+
+@apiErrorExample {JSON} Error 400:
+{
+    "code": 400,
+    "message": "Sai định dạng URL!"
+}
+@apiErrorExample {JSON} Error 404:
+{
+    "code": 404,
+    "message": "Không tìm thấy dữ liệu!"
+}
+@apiErrorExample {JSON} Error 500:
+{
+    "code": 500,
+    "message": "Xảy ra lỗi khi lấy tổng sản phẩm khuyễn mãi: Mô tả lỗi."
+}
+"""

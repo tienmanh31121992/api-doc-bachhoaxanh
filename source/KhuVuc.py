@@ -6,8 +6,18 @@
 @apiDescription Lấy danh sách khu vực
 
 
+@apiParam {Number} parent_id <mark>ID khu vực cha
+<br><code>parent_id=0:</code> Lấy khu vực cấp tỉnh</mark>
+
+@apiParam {String=id,sector_code,sector_name} sort=+id <mark>Sắp xếp dữ liệu. Ví dụ: <code>sort=+field_1,-field_2,field_3</code></mark>
+<ul>
+    <li><code>+:</code> Sắp xếp tăng dần</li>
+    <li><code>-:</code> Sắp xếp giảm dần</li>
+    <li><code>Mặc định:</code> Sắp xếp tăng dần</li>
+</ul>
+
 @apiParamExample URL request:
-{host}/api/v1.0/sectors
+{host}/api/v1.0/sectors?parent_id=0&sort=+id
 
 
 @apiSuccess {Number}    O.code Mã trạng thái HTTP
@@ -16,21 +26,10 @@
 @apiSuccess {Object[]}  O.data Danh sách thông tin khu vực
 @apiSuccess {Number}    O.data.sector_id ID khu vực
 @apiSuccess {Number}    O.data.parent_id ID khu vực cha
-@apiSuccess {String}    O.data.code Mã khu vực
-@apiSuccess {String}    O.data.name Tên khu vực
+@apiSuccess {String}    O.data.sector_code Mã khu vực
+@apiSuccess {String}    O.data.sector_name Tên khu vực
 @apiSuccess {Number}    O.data.level Cấp khu vực
-@apiSuccess {Object[]}  O.data.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    O.data.child.sector_id ID khu vực
-@apiSuccess {Number}    O.data.child.parent_id ID khu vực cha
-@apiSuccess {String}    O.data.child.code Mã khu vực
-@apiSuccess {String}    O.data.child.name Tên khu vực
-@apiSuccess {Number}    O.data.child.level Cấp khu vực
-@apiSuccess {Object[]}  O.data.child.child Danh sách thông tin khu vực con
-@apiSuccess {Number}    O.data.child.child.sector_id ID khu vực
-@apiSuccess {Number}    O.data.child.child.parent_id ID khu vực cha
-@apiSuccess {String}    O.data.child.child.code Mã khu vực
-@apiSuccess {String}    O.data.child.child.name Tên khu vực
-@apiSuccess {Number}    O.data.child.child.level Cấp khu vực
+
 
 @apiSuccessExample {JSON} Success 200:
 {
@@ -40,68 +39,51 @@
         {
             "sector_id": 1,
             "parent_id": 0,
-            "code": "NSP0001",
-            "name": "TP. Hồ Chí Minh",
-            "level": 1,
-            "child": [
-                {
-                    "sector_id": 68,
-                    "parent_id": 1,
-                    "code": "NSP0068",
-                    "name": "Quận 1",
-                    "level": 2,
-                    "child": [
-                         {
-                            "sector_id": 70,
-                            "parent_id": 68,
-                            "code": "NSP0068",
-                            "name": "An Khánh",
-                            "level": 3
-                        }
-                    ]
-                },
-                {
-                    "sector_id": 69,
-                    "parent_id": 1,
-                    "code": "NSP0069",
-                    "name": "Quận 2",
-                    "level": 2,
-                    "child": [
-                         {
-                            "sector_id": 71,
-                            "parent_id": 69,
-                            "code": "NSP0071",
-                            "name": "Nhà Thờ",
-                            "level": 3
-                        }
-                    ]
-                }
-            ]
+            "sector_code": "TINH001",
+            "sector_name": "TP. Hồ Chí Minh",
+            "level": 1
         },
         {
             "sector_id": 2,
             "parent_id": 0,
-            "code": "NSP0001",
-            "name": "An Giang",
-            "level": 1,
-            "child": [
-                {
-                    "sector_id": 80,
-                    "parent_id": 2,
-                    "code": "NSP0069",
-                    "name": "TP. Châu Đốc",
-                    "level": 2,
-                    "child": [
-                         {
-                            "sector_id": 82,
-                            "parent_id": 80,
-                            "code": "NSP0071",
-                            "name": "Hòa An",
-                            "level": 3
-                        }
-                    ]
-                }                
-            ]
+            "sector_code": "TINH002",
+            "sector_name": "An Giang",
+            "level": 1
+        },
+        {
+            "sector_id": 3,
+            "parent_id": 0,
+            "sector_code": "TINH003",
+            "sector_name": "Bạc Liêu",
+            "level": 1
+        },
+        {
+            "sector_id": 4,
+            "parent_id": 0,
+            "sector_code": "TINH004",
+            "sector_name": "Bến Tre",
+            "level": 1
+        },
+        {
+            "sector_id": 5,
+            "parent_id": 0,
+            "sector_code": "TINH005",
+            "sector_name": "Bình Dương",
+            "level": 1
+        },
+        {
+            "sector_id": 6,
+            "parent_id": 0,
+            "sector_code": "TINH006",
+            "sector_name": "Bình Phước",
+            "level": 1
+        },
+        {
+            "sector_id": 7,
+            "parent_id": 0,
+            "sector_code": "TINH007",
+            "sector_name": "Bình Thuận",
+            "level": 1
         }
     ]
 }
